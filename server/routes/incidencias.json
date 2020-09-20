@@ -1,0 +1,1514 @@
+{
+  "incidencia": [
+    {
+      "anio": 2019,
+      "mes": [
+        {
+          "mes": "febrero",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 33396,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 10561,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 30055,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 17815,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 115535,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 1692
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 636
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 359
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 834
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 873
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 25129
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 5039
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 18252
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 62
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 12892
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 45236
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 685058,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 296372
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 78473
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 282104
+                    }
+                  ]
+                }
+              ],
+              "total": 892420
+            }
+          ]
+        },
+        {
+          "mes": "marzo",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 37817,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 12929,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 36027,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 24060,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 139131,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 2309
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 898
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 861
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 1139
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 1019
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 32365
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 6208
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 19941
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 79
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 15584
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 53510
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 739128,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 320799
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 87916
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 300356
+                    }
+                  ]
+                }
+              ],
+              "total": 989092
+            }
+          ]
+        },
+        {
+          "mes": "abril",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 30147,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 9613,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 34710,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 17646,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 113908,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 1527
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 688
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 387
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 863
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 872
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 26389
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 5573
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 16982
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 42
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 13670
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 43767
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 549297,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 242576
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 72370
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 211828
+                    }
+                  ]
+                }
+              ],
+              "total": 755321
+            }
+          ]
+        },
+        {
+          "mes": "mayo",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 33824,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 10790,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 42110,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 19898,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 123796,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 2134
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 993
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 1916
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 1047
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 917
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 25342
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 6161
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 15725
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 93
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 15373
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 49000
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 682552,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 302608
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 87470
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 265901
+                    }
+                  ]
+                }
+              ],
+              "total": 912970
+            }
+          ]
+        },
+        {
+          "mes": "junio",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 34444,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 11702,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 40814,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 22263,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 146832,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 2134
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 993
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 1916
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 1047
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 917
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 25342
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 6161
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 15725
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 93
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 15373
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 49000
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 666348,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 302608
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 87470
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 265901
+                    }
+                  ]
+                }
+              ],
+              "total": 922403
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "anio": 2020,
+      "mes": [
+        {
+          "mes": "febrero",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 37170,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 9197,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 63057,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 36335,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 136932,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 1692
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 636
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 359
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 834
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 873
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 25129
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 5039
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 18252
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 62
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 12892
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 45236
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 729658,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 296372
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 78473
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 282104
+                    }
+                  ]
+                }
+              ],
+              "total": 892420
+            }
+          ]
+        },
+        {
+          "mes": "marzo",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 23973,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 6726,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 43402,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 18971,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 92704,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 2309
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 898
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 861
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 1139
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 1019
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 32365
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 6208
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 19941
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 79
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 15584
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 53510
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 400297,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 320799
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 87916
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 300356
+                    }
+                  ]
+                }
+              ],
+              "total": 989092
+            }
+          ]
+        },
+        {
+          "mes": "abril",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 5432,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 579,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 11347,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 3246,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 28813,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 1527
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 688
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 387
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 863
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 872
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 26389
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 5573
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 16982
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 42
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 13670
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 43767
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 31336,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 242576
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 72370
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 211828
+                    }
+                  ]
+                }
+              ],
+              "total": 755321
+            }
+          ]
+        },
+        {
+          "mes": "mayo",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 5033,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 485,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 11274,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 3076,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 29397,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 2134
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 993
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 1916
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 1047
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 917
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 25342
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 6161
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 15725
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 93
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 15373
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 49000
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 37276,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 302608
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 87470
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 265901
+                    }
+                  ]
+                }
+              ],
+              "total": 912970
+            }
+          ]
+        },
+        {
+          "mes": "junio",
+          "datos": [
+            {
+              "tipo": [
+                {
+                  "tipo": "accident",
+                  "total": 3843,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "chit_chat",
+                  "total": 515,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "police",
+                  "total": 7131,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "road_closed",
+                  "total": 4338,
+                  "subtipo": [
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    },
+                    {
+                      "subtipo": "n/a",
+                      "total": 0
+                    }
+                  ]
+                },
+                {
+                  "tipo": "hazard",
+                  "total": 23281,
+                  "subtipo": [
+                    {
+                      "subtipo": "hazard_on_road_traffic_light_fault",
+                      "total": 2134
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_animals",
+                      "total": 993
+                    },
+                    {
+                      "subtipo": "hazard_weather_flood",
+                      "total": 1916
+                    },
+                    {
+                      "subtipo": "hazard_on_road_road_kill",
+                      "total": 1047
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_missing_sign",
+                      "total": 917
+                    },
+                    {
+                      "subtipo": "hazard_on_road_pot_hole",
+                      "total": 25342
+                    },
+                    {
+                      "subtipo": "hazard_on_road_object",
+                      "total": 6161
+                    },
+                    {
+                      "subtipo": "hazard_on_road_construction",
+                      "total": 15725
+                    },
+                    {
+                      "subtipo": "hazard_on_road_ice",
+                      "total": 93
+                    },
+                    {
+                      "subtipo": "hazard_on_shoulder_car_stopped",
+                      "total": 15373
+                    },
+                    {
+                      "subtipo": "hazard_on_road_car_stopped",
+                      "total": 49000
+                    }
+                  ]
+                },
+                {
+                  "tipo": "jam",
+                  "total": 37864,
+                  "subtipo": [
+                    {
+                      "subtipo": "jam_heavy_traffic",
+                      "total": 302608
+                    },
+                    {
+                      "subtipo": "jam_moderate_traffic",
+                      "total": 87470
+                    },
+                    {
+                      "subtipo": "jam_stand_still_traffic",
+                      "total": 265901
+                    }
+                  ]
+                }
+              ],
+              "total": 922403
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

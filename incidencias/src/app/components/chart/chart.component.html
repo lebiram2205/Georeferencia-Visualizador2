@@ -1,0 +1,53 @@
+<div id='hola' class="container-fluid">
+    <h3>Incidencias de la ciudad de mexico</h3>
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <select class="d-inline form-control " name="tipoIncidencia"
+                id="tipoIncidencia">
+                <option value="incidencia" disabled selected>Incidencia</option>
+                <option value="accident">ACCIDENT</option>
+                <option value="police">POLICE</option>
+                <option value="road_close">ROAD_CLOSED</option>
+                <option value="hazard">HAZARD</option>
+                <option value="jam">JAM</option>
+                <option value="chit_chat">CHIT_CHAT</option>
+
+            </select>
+
+        </div>
+
+        <div class="col-sm-4">
+            <select class="d-inline form-control " name="fechaIncidencia"
+                id="fechaIncidencia">
+                <option value="anio" disabled selected>Año</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+            </select>
+
+        </div>
+
+        <div class="col-sm-3">
+            <button mtype="submit" class="btn btn-primary" id="boton">Buscar</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div>
+    <div>
+      <div style="display: block">
+        <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </div>
+      <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button>
+    </div>
+  </div>
