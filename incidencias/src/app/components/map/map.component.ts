@@ -19,16 +19,20 @@ export class MapComponent implements OnInit {
   }
   ngOnInit() {
     
-    var mymap = L.map('mapid').setView([19.37596, -99.07000], 12);
-    var mymap2 = L.map('mapid2').setView([19.37596, -99.07000], 12);
-    var mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
-    var mymap4 = L.map('mapid4').setView([19.37596, -99.07000], 12);
-    var mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
-    var mapClustering = L.map('mapClustering').setView([19.37596, -99.07000], 11);
-
+    let mymap = L.map('mapid').setView([19.37596, -99.07000], 12);
+    let mymap2 = L.map('mapid2').setView([19.37596, -99.07000], 12);
+    let mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
+    let mymap4 = L.map('mapid4').setView([19.37596, -99.07000], 12);
+    let mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
+    let mapClustering = L.map('mapClustering').setView([19.37596, -99.07000], 11);
+    let mapTrafico = L.map('mapTrafico').setView([19.37596, -99.07000], 11);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="copyright">Openstreetmap</a>'
     }).addTo(mapClustering);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="copyright">Openstreetmap</a>'
+    }).addTo(mapTrafico);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
     maxZoom: 18,
@@ -63,12 +67,62 @@ export class MapComponent implements OnInit {
             id: 'mapbox/streets-v11'
             }).addTo(mymap5);
 
-  var Icon = L.icon({iconUrl: '../.././assets/trafficlight.png',
+  function clearMap(m:any) {
+    for (let i in m._layers) {
+        if (m._layers[i]._path != undefined) {
+            try {
+                m.removeLayer(m._layers[i]);
+            } catch (e) {
+                console.log("problem with " + e + m._layers[i]);
+            }
+        }
+    }
+}
+
+
+//function animate(){
+   let firstpolyline;
+    this.mapServiceU.getTrafico().subscribe( ( data:any ) => {
+    for (let i = 0; i < data.jams.length; i++) {
+            for (let j = 1; j < (data.jams[i].line.length - 1); j++) {
+
+                let pointA = new L.LatLng(data.jams[i].line[j].y, data.jams[i].line[j].x);
+                let pointB = new L.LatLng(data.jams[i].line[j + 1].y, data.jams[i].line[j + 1].x);
+                let pointList = [pointA, pointB];
+
+                if (data.jams[i].speed < 5) {
+                    firstpolyline = new L.Polyline(pointList, {
+                        color: 'red',
+                        weight: 6,
+                        opacity: 0.5,
+                        smoothFactor: 1
+                    });
+                } else {
+                     firstpolyline = new L.Polyline(pointList, {
+                        color: 'orange',
+                        weight: 6,
+                        opacity: 0.5,
+                        smoothFactor: 1
+                    });
+                }
+                firstpolyline.addTo(mapTrafico);
+
+
+
+            }
+        }
+
+
+
+    });
+  //   setTimeout(animate, 3000);
+  //}setTimeout(animate, 3000);  //fin del animate
+  let Icon = L.icon({iconUrl: '../.././assets/trafficlight.png',
         iconSize: [20, 20],
         iconAnchor: [22, 20],
         popupAnchor: [-3, -76]});
     this.mapServiceU.getSemaforoizt().subscribe( ( data:any ) => {
-      var marker;
+      let marker;
         for (let i = 0; i < data.length; i++) {
 
             marker = L.marker([data[i].latitud, data[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola.");
@@ -76,19 +130,19 @@ export class MapComponent implements OnInit {
         }
     });
     this.mapServiceU.getSemaforoizc().subscribe( ( data:any ) => {
-      var marker;
+      let marker;
         for (let i = 0; i < data.length; i++) {
 
-            marker = L.marker([data[i].latitud, data[i].longitud]).addTo(mymap).bindPopup("Hola2");
+            marker = L.marker([data[i].latitud, data[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola2");
 
         }
     });
 
     this.mapServiceU.getSemaforomh().subscribe( ( data:any ) => {
-      var marker;
+      let marker;
         for (let i = 0; i < data.length; i++) {
 
-          marker = L.marker([data[i].latitud, data[i].longitud]).addTo(mymap).bindPopup("Hola3");
+          marker = L.marker([data[i].latitud, data[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola3");
 
         }
     });
@@ -96,6 +150,14 @@ export class MapComponent implements OnInit {
 this.mapServiceU.getCallesCerradas().subscribe( ( data:any ) => {
   let marker;
   let marker2;
+  let Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
+            iconSize: [20, 20],
+            iconAnchor: [22, 20],
+            popupAnchor: [-3, -76]});
+        let Icon2 = L.icon({iconUrl: '../.././assets/construction.png',
+            iconSize: [20, 20],
+            iconAnchor: [22, 20],
+            popupAnchor: [-3, -76]});
   for (let i = 0; i < data.jams.length; i++) {
 
             
@@ -106,24 +168,24 @@ this.mapServiceU.getCallesCerradas().subscribe( ( data:any ) => {
 
     if (data.jams[i].blockType == "ROAD_CLOSED_EVENT") {
         
-        marker = L.marker([data.jams[i].line[0].y, data.jams[i].line[0].x]).addTo(mymap2).bindPopup(opcionesPopUp);
+        marker = L.marker([data.jams[i].line[0].y, data.jams[i].line[0].x], {icon: Icon1}).addTo(mymap2).bindPopup(opcionesPopUp);
        
     }
     else if(data.jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
-        marker2 = L.marker([data.jams[i].line[0].y, data.jams[i].line[0].x]).addTo(mymap2).bindPopup(opcionesPopUp);
+        marker2 = L.marker([data.jams[i].line[0].y, data.jams[i].line[0].x], {icon: Icon1}).addTo(mymap2).bindPopup(opcionesPopUp);
     }
 }
 });
 
 this.mapServiceU.getCallesCerradas2().subscribe( ( data:any ) => {
-  var markers = L.markerClusterGroup();
-var markerList = [];    
+  let markers = L.markerClusterGroup();
+let markerList = [];    
 
-var Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
+let Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
     iconSize: [20, 20],
     iconAnchor: [22, 20],
     popupAnchor: [-3, -76]});
-var Icon2 = L.icon({iconUrl: '../.././assets/construction.png',
+let Icon2 = L.icon({iconUrl: '../.././assets/construction.png',
     iconSize: [20, 20],
     iconAnchor: [22, 20],
     popupAnchor: [-3, -76]});
@@ -136,12 +198,12 @@ for (let i = 0; i < data.jams.length; i++) {
 
     if (data.jams[i].blockType == "ROAD_CLOSED_EVENT") {
         
-        var marker = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon1}).bindPopup(opcionesPopUp);
+        let marker = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon1}).bindPopup(opcionesPopUp);
         markerList.push(marker);
 
     }
     else if(data.jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
-        var marker2 = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon2}).bindPopup(opcionesPopUp);
+        let marker2 = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon2}).bindPopup(opcionesPopUp);
         markerList.push(marker2);
     }
     
@@ -155,16 +217,21 @@ mapClustering.addLayer(markers);
 });
 this.mapServiceU.getCallesCerradas().subscribe( ( data:any ) => {
 let marker;
+
+        let greenIcon = L.icon({iconUrl: '../.././assets/accesdenied.png',
+            iconSize: [20, 20],
+            iconAnchor: [22, 20],
+            popupAnchor: [-3, -76]});
 for (let i = 0; i < data.alerts.length; i++) {
   if (data.alerts[i].type == "ROAD_CLOSED") {
-      marker = L.marker([data.alerts[i].location.y, data.alerts[i].location.x]).addTo(mymap3).bindPopup("Soy un nuevo");
+      marker = L.marker([data.alerts[i].location.y, data.alerts[i].location.x],{icon: greenIcon}).addTo(mymap3).bindPopup("Soy un nuevo");
   } 
   
 }
 });
 this.mapServiceU.getCallesCerradas().subscribe( ( data:any ) => {
   let marker;
-  var polygon = L.polygon([
+  let polygon = L.polygon([
     [19.360512, -99.143214],
     [19.316003, -99.084884],
     [19.323093, -99.188257]
@@ -173,12 +240,10 @@ this.mapServiceU.getCallesCerradas().subscribe( ( data:any ) => {
 
 
 this.mapServiceU.getAlcaldias().subscribe( ( data:any ) => {
-  var marker;
+  let marker;
   L.geoJSON(data).addTo(mymap5);
 });
   
-
-
 
 
 

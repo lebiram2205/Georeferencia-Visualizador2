@@ -7,6 +7,10 @@ import {APP_ROUTING} from './app.routes';
 // Graficos
 import { ChartsModule } from "ng2-charts";
 
+
+import{ FormsModule} from '@angular/forms';
+import{ ReactiveFormsModule} from '@angular/forms';
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -25,9 +29,11 @@ import * as $ from 'jquery';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     APP_ROUTING,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    ReactiveFormsModule
   ],
   providers: [MapService],
   bootstrap: [AppComponent]

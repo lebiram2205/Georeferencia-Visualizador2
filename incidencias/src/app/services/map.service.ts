@@ -8,9 +8,12 @@ export class MapService {
   readonly URL_API= 'http://localhost:3000';
 
   constructor(private http:HttpClient) { }
+
+  
   getTrafico(){
-    return this.http.get(this.URL_API +'/traffic')
+     return this.http.get(this.URL_API +'/traffic');
   }
+  
   getSemaforoizt(){
     return this.http.get(this.URL_API+'/semaforoizt');
   }

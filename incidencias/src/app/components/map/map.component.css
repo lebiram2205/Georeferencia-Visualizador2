@@ -14,10 +14,10 @@
     width: 300px;
 }
 
-#map,#mapClustering{
+#map,#mapClustering,#mapTrafico{
     height: 100%;
 }
-#mapid, #mapid2,#mapid3, #mapid4, #mapid5,#map,#mapClustering{
+#mapid, #mapid2,#mapid3, #mapid4, #mapid5,#map,#mapClustering,#mapTrafico{
     height: 70vh;
     margin: 0px;
     padding:20px;
