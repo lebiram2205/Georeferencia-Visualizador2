@@ -29,7 +29,9 @@ const app=express.Router();
 //vamos a utilizarlo como nuestra api rest enviar y recibir datos en formato json
    app.use(express.static(__dirname+'semaforos_iztapalapa.json'));
 
-
+const incidencia = require('../controllers/incidencias.controller');
+app.get('/trafico',incidencia.gettrafico);
+app.post('/trafico', incidencia.posttrafico);
 
 
 app.get('/traffic', function (req, res) {

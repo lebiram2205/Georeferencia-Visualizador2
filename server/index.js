@@ -2,8 +2,10 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors= require("cors");
-const app = express();
 
+const app = express();
+//Conexion a la base de datos
+const{mongoose}=require('./baseDeDatos');
 //Settings
 app.set('port', process.env.PORT||3000);
 
