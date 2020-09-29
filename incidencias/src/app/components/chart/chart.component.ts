@@ -20,60 +20,50 @@ export class ChartComponent implements OnInit {
     this.mapServiceU = mapService;
     
    }
-   anio:string[]=["2019","2020"];
-   incidencia:string[]=["ACCIDENT",
+  anio:string[]=["2019","2020"];
+  incidencia:string[]=["ACCIDENT",
     "POLICE",
     "ROAD_CLOSED",
     "HAZARD",
     "JAM",
     "CHIT_CHAT"];
 
-   listform=this.fb.group({
-     anio:[''],
-     incidencia:['']
-   })
+  listform=this.fb.group({
+    anio:[''],
+    incidencia:['']
+  })
 
-onSubmit(){
-  let tipoIncidencia:any=this.listform.value.incidencia;
-  let fechaInc:any=this.listform.value.anio;
-  // alert(this.listform.value.anio);
-  // alert(this.listform.value.incidencia);
-  this.mapServiceU.getIncidencias().subscribe( ( data:any ) => {
-    var incidencia;
-                        var totales = [];
-                        var etiquetasFinales = [];
-                        var totalMes, etiquetaMes;
+  onSubmit(){
+    let tipoIncidencia:any=this.listform.value.incidencia;
+    let fechaInc:any=this.listform.value.anio;
+    // alert(this.listform.value.anio);
+    // alert(this.listform.value.incidencia);
+    this.mapServiceU.getIncidencias().subscribe( ( data:any ) => {
+      var incidencia;
+      var totales = [];
+      var etiquetasFinales = [];
+      var totalMes, etiquetaMes;
 
-                        for (var i = 0; i < data.incidencia.length; i++) {
-                            if (data.incidencia[i].anio == fechaInc) {
-                               
-                                for (var j = 0; j < data.incidencia[i].mes.length; j++) {
-                                    
-                                    for (var k = 0; k < (data.incidencia[i].mes[j].datos[0].tipo[k].tipo.length) ; k++) {                 
-                                        if (tipoIncidencia.toLowerCase() == data.incidencia[i].mes[j].datos[0].tipo[k].tipo) {
-                                            totalMes = data.incidencia[i].mes[j].datos[0].tipo[k].total;
-                                            etiquetaMes = data.incidencia[i].mes[j].mes;
-                                            totales.push(totalMes);
-                                            etiquetasFinales.push(etiquetaMes);
-                                        }
-                                    }
-                                }
+      for (var i = 0; i < data.incidencia.length; i++) {
+        if (data.incidencia[i].anio == fechaInc) {
+          for (var j = 0; j < data.incidencia[i].mes.length; j++) {
+            for (var k = 0; k < (data.incidencia[i].mes[j].datos[0].tipo[k].tipo.length) ; k++) {                 
+              if (tipoIncidencia.toLowerCase() == data.incidencia[i].mes[j].datos[0].tipo[k].tipo) {
+                totalMes = data.incidencia[i].mes[j].datos[0].tipo[k].total;
+                etiquetaMes = data.incidencia[i].mes[j].mes;
+                totales.push(totalMes);
+                etiquetasFinales.push(etiquetaMes);
+              }
+            }
+          }
+        }
+      }
+      console.log("Total " + totales);
+      console.log("Etiquetas de meses"+ etiquetasFinales);
+      this.randomize(totales, etiquetasFinales,fechaInc,tipoIncidencia);
+    });
 
-                            }
-
-                        }
-                        console.log("Total " + totales);
-                        console
-                                .log("Etiquetas de meses"
-                                        + etiquetasFinales);
-                                       this.randomize(totales, etiquetasFinales,fechaInc,tipoIncidencia);
-
-
-
-});
-
-
-}
+  }
 
 
   ngOnInit(): void {
@@ -101,39 +91,31 @@ onSubmit(){
     { data: [892420, 989092, 755321, 912970, 922403], label: '2019' },
     { data: [1012349, 586073, 80753, 80541, 76972], label: '2020' }
   ];
-// events
-public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-  console.log(event, active);
-}
-public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-  console.log(event, active);
-}
-public randomize(t:any,e:any,f:any,i:any): void {
-  console.log(i);
-  if(i=="Totales Incidencias" && f=="Todos"){
-    this.barChartData[0].data=[892420, 989092, 755321, 912970, 922403];
-    this.barChartData[1].data=[1012349, 586073, 80753, 80541, 76972];
-    this.barChartData[0].label = '2019';
-    this.barChartData[1].label = '2020';
+  // events
+  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
+    console.log(event, active);
   }
-else{
-
-  // Only Change 3 values
-  const data = t;
-  const labels=e;
-  const fecha=f;  
-  this.barChartData[0].data = data;
-  this.barChartData[0].label = fecha;
-  delete this.barChartData[1].data;
-  this.barChartLabels=labels;
-}
+  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
+  public randomize(t:any,e:any,f:any,i:any): void {
+    console.log(i);
+    if(i=="Totales Incidencias" && f=="Todos"){
+      this.barChartData[0].data=[892420, 989092, 755321, 912970, 922403];
+      this.barChartData[1].data=[1012349, 586073, 80753, 80541, 76972];
+      this.barChartData[0].label = '2019';
+      this.barChartData[1].label = '2020';
+    }
+    else{
+      // Only Change 3 values
+      const data = t;
+      const labels=e;
+      const fecha=f;  
+      this.barChartData[0].data = data;
+      this.barChartData[0].label = fecha;
+      delete this.barChartData[1].data;
+      this.barChartLabels=labels;
+    }
+  }
   
- 
-}
-  
-
-
-
-
-
 }//fin de la clase
