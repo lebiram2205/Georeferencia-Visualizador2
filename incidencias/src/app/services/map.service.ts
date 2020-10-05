@@ -11,7 +11,7 @@ export class MapService {
 
   
   getTrafico(){
-    return this.http.get(this.URL_API +'/traffic');
+    return this.http.get(this.URL_API +'/traffic'+'/2020-01-14 05:57:00:000');
   }
   
   getSemaforoizt(){

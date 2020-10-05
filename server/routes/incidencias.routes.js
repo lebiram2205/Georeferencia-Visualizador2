@@ -33,6 +33,9 @@ const incidencia = require('../controllers/incidencias.controller');
 app.get('/trafico',incidencia.gettrafico);
 app.post('/trafico', incidencia.posttrafico);
 
+//aquí va el nombre de la variable de fecha
+app.get('/trafico/:startTime',incidencia.getUnJson);
+
 
 app.get('/traffic', function (req, res) {
    

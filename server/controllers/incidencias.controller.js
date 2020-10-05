@@ -13,5 +13,16 @@ IncidenciasCtrl.posttrafico=async(req, res)=>{
         'estado':'Archivo de trafico JSON Generado'
     })
 };
+
+
+
+
+IncidenciasCtrl.getUnJson=async(req, res)=>{
+    //En req.params se encuentra el dato recibido por URL en formato JSON
+    const traficoJson = await incidencia.find(req.params);
+   
+    res.json(traficoJson);
+    
+};
 module.exports=IncidenciasCtrl;
 
