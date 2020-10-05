@@ -85,7 +85,7 @@ export class MapComponent implements OnInit {
         }
         var cont=0;
         let firstpolyline;
-        //function animate(){
+        //function animate(){ INICIO DE LA PELICULA
         do{
             
             //clearMap(mapTrafico);
@@ -158,7 +158,8 @@ export class MapComponent implements OnInit {
 
             cont=cont+1;
             setTimeout(function f(){console.log("wait");},5000); 
-        }while(cont<50);
+
+        }while(cont<50); //FIN DE LA PELICULA
         console.log("FINISH");   
             //setTimeout(animate, 3000);
         //}setInterval(animate, 3000);  //fin del animate
@@ -215,41 +216,7 @@ export class MapComponent implements OnInit {
                 }
             }
         });
-        /** 
-        this.mapServiceU.getCallesCerradas2().subscribe( ( data:any ) => {
-            let markers = L.markerClusterGroup();
-            let markerList = [];    
-
-            let Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
-                iconSize: [20, 20],
-                iconAnchor: [22, 20],
-                popupAnchor: [-3, -76]});
-
-            let Icon2 = L.icon({iconUrl: '../.././assets/construction.png',
-                iconSize: [20, 20],
-                iconAnchor: [22, 20],
-                popupAnchor: [-3, -76]});
-
-            for (let i = 0; i < data.jams.length; i++) {
-                const opcionesPopUp = L.popup() //Funcion de leaflet
-                    .setContent(`<p><b>Alcaldia:</b> ${data.jams[i].city}</p>
-                    <p> <b>Calle:</b>  ${data.jams[i].street}</p>
-                    `)
-
-                if (data.jams[i].blockType == "ROAD_CLOSED_EVENT") {
-                    let marker = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon1}).bindPopup(opcionesPopUp);
-                    markerList.push(marker);
-                }
-                else if(data.jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
-                    let marker2 = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon2}).bindPopup(opcionesPopUp);
-                    markerList.push(marker2);
-                }
-            
-            }
-            markers.addLayers(markerList);
-            mapClustering.addLayer(markers);
-        });
-        **/
+        
 
         this.mapServiceU.getCallesCerradas().subscribe( ( data:any ) => {
             let marker;
