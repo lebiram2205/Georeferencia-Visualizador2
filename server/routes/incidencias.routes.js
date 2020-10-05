@@ -32,6 +32,7 @@ const app=express.Router();
 const incidencia = require('../controllers/incidencias.controller');
 app.get('/trafico',incidencia.gettrafico);
 app.post('/trafico', incidencia.posttrafico);
+app.get('/',incidencia.gettraficoById);
 
 
 app.get('/traffic', function (req, res) {

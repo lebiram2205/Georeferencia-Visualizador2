@@ -10,7 +10,7 @@ const{mongoose}=require('./baseDeDatos');
 app.set('port', process.env.PORT||3000);
 
 //Midlewares
-
+app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors({origin:'http://localhost:4200'}));
 //Routes the server
