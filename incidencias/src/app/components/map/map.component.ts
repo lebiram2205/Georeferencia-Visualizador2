@@ -92,14 +92,14 @@ export class MapComponent implements OnInit {
             
             this.mapServiceU.getTrafico().subscribe( ( data:any ) => {
                 clearMap(mapTrafico);
-                for (let i = 0; i < data.jams.length; i++) {
-                    for (let j = 1; j < (data.jams[i].line.length - 1); j++) {
+                for (let i = 0; i < data[0].jams.length; i++) {
+                    for (let j = 1; j < (data[0].jams[i].line.length - 1); j++) {
 
-                        let pointA = new L.LatLng(data.jams[i].line[j].y, data.jams[i].line[j].x);
-                        let pointB = new L.LatLng(data.jams[i].line[j + 1].y, data.jams[i].line[j + 1].x);
+                        let pointA = new L.LatLng(data[0].jams[i].line[j].y, data[0].jams[i].line[j].x);
+                        let pointB = new L.LatLng(data[0].jams[i].line[j + 1].y, data[0].jams[i].line[j + 1].x);
                         let pointList = [pointA, pointB];
 
-                        if (data.jams[i].speed < 5) {
+                        if (data[0].jams[i].speed < 5) {
                             firstpolyline = new L.Polyline(pointList, {
                                 color: 'red',
                                 weight: 6,
@@ -135,18 +135,18 @@ export class MapComponent implements OnInit {
                     iconAnchor: [22, 20],
                     popupAnchor: [-3, -76]});
     
-                for (let i = 0; i < data.jams.length; i++) {
+                for (let i = 0; i < data[0].jams.length; i++) {
                     const opcionesPopUp = L.popup() //Funcion de leaflet
-                        .setContent(`<p><b>Alcaldia:</b> ${data.jams[i].city}</p>
-                        <p> <b>Calle:</b>  ${data.jams[i].street}</p>
+                        .setContent(`<p><b>Alcaldia:</b> ${data[0].jams[i].city}</p>
+                        <p> <b>Calle:</b>  ${data[0].jams[i].street}</p>
                         `)
     
-                    if (data.jams[i].blockType == "ROAD_CLOSED_EVENT") {
-                        let marker = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon1}).bindPopup(opcionesPopUp);
+                    if (data[0].jams[i].blockType == "ROAD_CLOSED_EVENT") {
+                        let marker = L.marker(L.latLng(data[0].jams[i].line[0].y, data[0].jams[i].line[0].x), {icon: Icon1}).bindPopup(opcionesPopUp);
                         markerList.push(marker);
                     }
-                    else if(data.jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
-                        let marker2 = L.marker(L.latLng(data.jams[i].line[0].y, data.jams[i].line[0].x), {icon: Icon2}).bindPopup(opcionesPopUp);
+                    else if(data[0].jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
+                        let marker2 = L.marker(L.latLng(data[0].jams[i].line[0].y, data[0].jams[i].line[0].x), {icon: Icon2}).bindPopup(opcionesPopUp);
                         markerList.push(marker2);
                     }
                 
@@ -159,7 +159,7 @@ export class MapComponent implements OnInit {
             cont=cont+1;
             setTimeout(function f(){console.log("wait");},5000); 
 
-        }while(cont<50); //FIN DE LA PELICULA
+        }while(cont<1); //FIN DE LA PELICULA
         console.log("FINISH");   
             //setTimeout(animate, 3000);
         //}setInterval(animate, 3000);  //fin del animate
