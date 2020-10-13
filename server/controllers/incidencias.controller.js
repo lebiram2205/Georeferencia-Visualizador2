@@ -27,6 +27,8 @@ var i=0;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 const incidencia = require('../models/incidencia');
 const semaforo = require('../models/semaforo');
+const geo = require('../models/geo');
+const chart = require('../models/chart');
 const IncidenciasCtrl= {};
 
 IncidenciasCtrl.gettrafico=async(req, res)=>{
@@ -79,46 +81,22 @@ IncidenciasCtrl.getTraffic=async(req,res)=>{
 };
 
 IncidenciasCtrl.semaforoIzt=async(req,res)=>{
-    /*console.log('entre');
-    var file;
-    const fs = require('fs');
-    file= __dirname +'/../routes/semaforos_iztapalapa.json'
-    let rawdata = fs.readFileSync(file);
-    let semaforo = JSON.parse(rawdata)*/
     const semJson = await semaforo.findById("5f84d6dcdc95dac4f736d7a8");
     res.json(semJson);
 }
 
 IncidenciasCtrl.semaforoIzc=async(req,res)=>{
-    /*var file;
-    const fs = require('fs');
-    file= __dirname +'/../routes/semaforos_iztacalco.json'
-    let rawdata = fs.readFileSync(file);
-    let semaforo = JSON.parse(rawdata)
-    res.json(semaforo);*/
     const semJson = await semaforo.findById("5f84d6f11ada8bad6f29dde1");
     res.json(semJson);
 }
 
 IncidenciasCtrl.semaforoMh=async(req,res)=>{
-    /*var file;
-    const fs = require('fs');
-    file= __dirname +'/../routes/semaforos_miguelhidalgo.json'
-    let rawdata = fs.readFileSync(file);
-    let semaforo = JSON.parse(rawdata)
-    res.json(semaforo);*/
     const semJson = await semaforo.findById("5f84d6e6c3596758fe948230");
     res.json(semJson);
 }
 
 IncidenciasCtrl.calleCerrada=async(req,res)=>{
-    var file;
-    const fs = require('fs');
-    file= __dirname + '/../routes/trafico/CDMX_2020-01-14-'+times[i]+'.json'
-    console.log("File: "+file);
-    let rawdata = fs.readFileSync(file);
-    i = (i +1) % times.length;
-    let trafico = JSON.parse(rawdata);
+    const trafico= await incidencia.find({},{"_id":0,"alerts":1,"jams":1}).limit(1);
     res.json(trafico);
 }
 
@@ -134,22 +112,13 @@ IncidenciasCtrl.roadClose=async(req,res)=>{
 }
 
 IncidenciasCtrl.alcaldia=async(req,res)=>{
-    var file;
-    const fs = require('fs');
-    file= __dirname + '/../routes/alcaldias.geojson'
-    let rawdata = fs.readFileSync(file);
-    let alcaldias=JSON.parse(rawdata);
-    res.json(alcaldias);
-    
+    const trafico= await geo.find().limit();
+    res.json(trafico);
 }
 
 IncidenciasCtrl.incidencia=async(req,res)=>{
-    var file;
-    const fs = require('fs');
-    file= __dirname + '/../routes/incidencias.json'
-    let rawdata = fs.readFileSync(file);
-    let incidencias = JSON.parse(rawdata)
-    res.json(incidencias);
+    const trafico= await chart.find().limit();
+    res.json(trafico);
 }
 
 module.exports=IncidenciasCtrl;

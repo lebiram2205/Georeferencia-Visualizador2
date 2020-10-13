@@ -26,7 +26,6 @@ export class MapComponent implements OnInit {
         let mymap = L.map('mapid').setView([19.37596, -99.07000], 12);
         let mymap2 = L.map('mapid2').setView([19.37596, -99.07000], 12);
         let mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
-        let mymap4 = L.map('mapid4').setView([19.37596, -99.07000], 12);
         let mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
         let mapClustering = L.map('mapClustering').setView([19.37596, -99.07000], 11);
         let mapTrafico = L.map('mapTrafico').setView([19.37596, -99.07000], 11);
@@ -58,11 +57,6 @@ export class MapComponent implements OnInit {
             maxZoom: 18,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap3);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(mymap4);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                 maxZoom: 18,
@@ -202,17 +196,17 @@ export class MapComponent implements OnInit {
                 iconSize: [20, 20],
                 iconAnchor: [22, 20],
                 popupAnchor: [-3, -76]});
-            for (let i = 0; i < data.jams.length; i++) {
+            for (let i = 0; i < data[0].jams.length; i++) {
                 const opcionesPopUp = L.popup() //Funcion de leaflet
-                    .setContent(`<p><b>Alcaldia:</b> ${data.jams[i].city}</p>
-                    <p> <b>Calle:</b>  ${data.jams[i].street}</p>
+                    .setContent(`<p><b>Alcaldia:</b> ${data[0].jams[i].city}</p>
+                    <p> <b>Calle:</b>  ${data[0].jams[i].street}</p>
                     `)
 
-                if (data.jams[i].blockType == "ROAD_CLOSED_EVENT") {
-                    marker = L.marker([data.jams[i].line[0].y, data.jams[i].line[0].x], {icon: Icon1}).addTo(mymap2).bindPopup(opcionesPopUp);
+                if (data[0].jams[i].blockType == "ROAD_CLOSED_EVENT") {
+                    marker = L.marker([data[0].jams[i].line[0].y, data[0].jams[i].line[0].x], {icon: Icon1}).addTo(mymap2).bindPopup(opcionesPopUp);
                 }
-                else if(data.jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
-                    marker2 = L.marker([data.jams[i].line[0].y, data.jams[i].line[0].x], {icon: Icon1}).addTo(mymap2).bindPopup(opcionesPopUp);
+                else if(data[0].jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
+                    marker2 = L.marker([data[0].jams[i].line[0].y, data[0].jams[i].line[0].x], {icon: Icon1}).addTo(mymap2).bindPopup(opcionesPopUp);
                 }
             }
         });
@@ -225,27 +219,17 @@ export class MapComponent implements OnInit {
                 iconAnchor: [22, 20],
                 popupAnchor: [-3, -76]
             });
-            for (let i = 0; i < data.alerts.length; i++) {
-                if (data.alerts[i].type == "ROAD_CLOSED") {
-                    marker = L.marker([data.alerts[i].location.y, data.alerts[i].location.x],{icon: greenIcon}).addTo(mymap3).bindPopup("Soy un nuevo");
+            for (let i = 0; i < data[0].alerts.length; i++) {
+                if (data[0].alerts[i].type == "ROAD_CLOSED") {
+                    marker = L.marker([data[0].alerts[i].location.y, data[0].alerts[i].location.x],{icon: greenIcon}).addTo(mymap3).bindPopup("Soy un nuevo");
                 } 
             }
         });
 
 
-        this.mapServiceU.getCallesCerradas().subscribe( ( data:any ) => {
-            let marker;
-            let polygon = L.polygon([
-                [19.360512, -99.143214],
-                [19.316003, -99.084884],
-                [19.323093, -99.188257]
-            ]).addTo(mymap4);
-        });
-
-
         this.mapServiceU.getAlcaldias().subscribe( ( data:any ) => {
             let marker;
-            L.geoJSON(data).addTo(mymap5);
+            L.geoJSON(data[0]).addTo(mymap5);
         });
         
 
