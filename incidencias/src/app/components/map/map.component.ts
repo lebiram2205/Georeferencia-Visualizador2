@@ -116,7 +116,7 @@ export class MapComponent implements OnInit {
                         }
                         firstpolyline.addTo(mapTrafico);
                     }
-                }setTimeout(function f(){console.log("out");},5000); 
+                }setTimeout(function f(){console.log("out");},1000); 
             });
 
 
@@ -153,11 +153,11 @@ export class MapComponent implements OnInit {
                 }
                 markers.addLayers(markerList);
                 mapClustering.addLayer(markers);
-                setTimeout(function f(){console.log("outCluster");},5000);
+                setTimeout(function f(){console.log("outCluster");},1000);
             });
-
+            
             cont=cont+1;
-            setTimeout(function f(){console.log("wait");},5000); 
+            setTimeout(function f(){console.log("wait");},1000); 
 
         }while(cont<1); //FIN DE LA PELICULA
         console.log("FINISH");   
@@ -172,22 +172,22 @@ export class MapComponent implements OnInit {
 
         this.mapServiceU.getSemaforoizt().subscribe( ( data:any ) => {
             let marker;
-            for (let i = 0; i < data.length; i++) {
-                marker = L.marker([data[i].latitud, data[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola.");
+            for (let i = 0; i < data.semaforo.length; i++) {
+                marker = L.marker([data.semaforo[i].latitud, data.semaforo[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola.");
             }
         });
 
         this.mapServiceU.getSemaforoizc().subscribe( ( data:any ) => {
             let marker;
-            for (let i = 0; i < data.length; i++) {
-                marker = L.marker([data[i].latitud, data[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola2");
+            for (let i = 0; i < data.semaforo.length; i++) {
+                marker = L.marker([data.semaforo[i].latitud, data.semaforo[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola2");
             }
         });
 
         this.mapServiceU.getSemaforomh().subscribe( ( data:any ) => {
             let marker;
-            for (let i = 0; i < data.length; i++) {
-                marker = L.marker([data[i].latitud, data[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola3");
+            for (let i = 0; i < data.semaforo.length; i++) {
+                marker = L.marker([data.semaforo[i].latitud, data.semaforo[i].longitud], {icon:Icon}).addTo(mymap).bindPopup("Hola3");
             }
         });
 

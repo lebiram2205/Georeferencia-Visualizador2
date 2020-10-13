@@ -11,8 +11,8 @@ export class MapService {
 
   //2020-01-14 05:57:00:000
   getTrafico(){
-    //return this.http.get(this.URL_API +'/traffic');
-    return this.http.get(this.URL_API +'/trafico'+'/2020-01-14 05:57:00:000');
+    return this.http.get(this.URL_API +'/trafico');
+    //return this.http.get(this.URL_API +'/trafico'+'/2020-01-14 05:57:00:000');
   }
   
   getSemaforoizt(){
@@ -28,8 +28,8 @@ export class MapService {
     return this.http.get(this.URL_API+'/callescerradas');
   }
   getCallesCerradas2(){
-    //return this.http.get(this.URL_API+'/roadclosed');
-    return this.http.get(this.URL_API +'/trafico'+'/2020-01-14 05:57:00:000');
+    return this.http.get(this.URL_API+'/trafico');
+    //return this.http.get(this.URL_API +'/trafico'+'/2020-01-14 05:57:00:000');
   }
   getAlcaldias(){
     return this.http.get(this.URL_API+'/alcaldias');
