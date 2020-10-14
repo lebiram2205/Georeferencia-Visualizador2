@@ -44,13 +44,13 @@ export class ChartComponent implements OnInit {
       var etiquetasFinales = [];
       var totalMes, etiquetaMes;
 
-      for (var i = 0; i < data.incidencia.length; i++) {
-        if (data.incidencia[i].anio == fechaInc) {
-          for (var j = 0; j < data.incidencia[i].mes.length; j++) {
-            for (var k = 0; k < (data.incidencia[i].mes[j].datos[0].tipo[k].tipo.length) ; k++) {                 
-              if (tipoIncidencia.toLowerCase() == data.incidencia[i].mes[j].datos[0].tipo[k].tipo) {
-                totalMes = data.incidencia[i].mes[j].datos[0].tipo[k].total;
-                etiquetaMes = data.incidencia[i].mes[j].mes;
+      for (var i = 0; i < data[0].incidencia.length; i++) {
+        if (data[0].incidencia[i].anio == fechaInc) {
+          for (var j = 0; j < data[0].incidencia[i].mes.length; j++) {
+            for (var k = 0; k < (data[0].incidencia[i].mes[j].datos[0].tipo.length) ; k++) {                 
+              if (tipoIncidencia.toLowerCase() == data[0].incidencia[i].mes[j].datos[0].tipo[k].tipo) {
+                totalMes = data[0].incidencia[i].mes[j].datos[0].tipo[k].total;
+                etiquetaMes = data[0].incidencia[i].mes[j].mes;
                 totales.push(totalMes);
                 etiquetasFinales.push(etiquetaMes);
               }
@@ -76,7 +76,7 @@ export class ChartComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
-    scales: { xAxes: [{}], yAxes: [{}] },
+    scales: { xAxes: [{}], yAxes: [{ticks: {beginAtZero: true}}] },
     plugins: {
       datalabels: {
         anchor: 'end',
