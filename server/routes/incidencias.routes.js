@@ -9,7 +9,10 @@ app.post('/trafico', incidencia.posttrafico);
 
 //aquí va el nombre de la variable de fecha
 //app.get('/trafico/:startTime',incidencia.getUnJson);
-app.get('/trafico/:variable',incidencia.consultas);
+//app.get('/trafico/',incidencia.consultas);
+
+app.get('/trafico/:tipoIncidencia/:fecha', incidencia.getJsonIncidenciaTipo);
+app.get('/trafico/:tipoIncidencia/:fecha/:ciudad', incidencia.getJsonIncidenciaTipoCiudad);
 
 app.get('/traffic', incidencia.getTraffic );
 app.get('/semaforoizt', incidencia.semaforoIzt  );

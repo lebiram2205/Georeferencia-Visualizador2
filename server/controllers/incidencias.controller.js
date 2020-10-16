@@ -29,10 +29,13 @@ const incidencia = require('../models/incidencia');
 const semaforo = require('../models/semaforo');
 const geo = require('../models/geo');
 const chart = require('../models/chart');
+
+const mongoose = require('mongoose');
+
 const IncidenciasCtrl= {};
 
 IncidenciasCtrl.gettrafico=async(req, res)=>{
-    const trafico= await incidencia.find().limit(1);
+    const trafico= await incidencia.find().limit(2);
     res.json(trafico);
 };
 
@@ -53,17 +56,16 @@ IncidenciasCtrl.getUnJson=async(req, res)=>{
 
 IncidenciasCtrl.consultas=async(req, res)=>{
    //const traficoJson = await incidencia.find({"alerts.reportBy":"Corichido"},{"startTime":1, "_id":0});
-   //const traficoJson = await incidencia.distinct("alerts.city");
+   const traficoJson = await incidencia.distinct("alerts.type");
    //const traficoJson = await incidencia.distinct("alerts.reportBy");
    //const traficoJson = await incidencia.find({"startTime":{"$regex": "2020-01-14 06"}},{"startTime":1, "endTime":1, "_id":0});
-   const traficoJson = await incidencia.find({"startTime":{"$regex": req.params.variable}},{"startTime":1, "endTime":1, "_id":0});
+   //const traficoJson = await incidencia.find({"startTime":{"$regex": req.params.variable}},{"startTime":1, "endTime":1, "_id":0});
    /*const traficoJson = await incidencia.aggregate ([
     {$match: {}},
     {$unwind: '$alerts'},
     {$match: {'alerts.city': 'Coyoacán'}},
     {$group: {_id: '$_id', alerta: {$addToSet: '$alerts.id'},  alerta:    {$addToSet: '$alerts.street'}}}
    ]);*/
-   
    res.json(traficoJson);
    // console.log(req.params.variable);
 }
@@ -120,10 +122,52 @@ IncidenciasCtrl.incidencia=async(req,res)=>{
     const trafico= await chart.find().limit();
     res.json(trafico);
 }
+//Obtener JSON por tipo de  incidencia (localizaciones) recibe tipofecha
+IncidenciasCtrl.getJsonIncidenciaTipo = async (req, res) => {
+    
+    //var miId = mongoose.Types.ObjectId("5f8221e8f530de9cbd1d417f");
+    //const fecha = await incidencia.find({"startTime":'2020-01-14 05:57:00:000'}).limit(1);
+    console.log(req.params.ciudad);
+
+    const datosTipoIncidencia = await incidencia.aggregate(
+        [   
+            {$match: {"startTime": req.params.fecha}},
+            {$unwind: '$alerts'},
+            {$match: {'alerts.type': req.params.tipoIncidencia}},
+            {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'} } }
+        ]
+    );
+    
+    res.json(datosTipoIncidencia);
+    console.log(req.params.tipoIncidencia)
+}
+
+//Obtener JSON por tipo de  incidencia (localizaciones) recibe tipo/fecha/ciudad
+IncidenciasCtrl.getJsonIncidenciaTipoCiudad = async (req, res) => {
+    
+    //var miId = mongoose.Types.ObjectId("5f8221e8f530de9cbd1d417f");
+    //const fecha = await incidencia.find({"startTime":'2020-01-14 05:57:00:000'}).limit(1);
+    console.log(req.params.ciudad);
+
+    const datosTipoIncidencia = await incidencia.aggregate(
+        [   
+            {$match: {"startTime": req.params.fecha}},
+            {$unwind: '$alerts'},
+            {$match: {'alerts.type': req.params.tipoIncidencia,'alerts.city': req.params.ciudad}},
+            {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'} } }
+        ]
+    );
+    
+    res.json(datosTipoIncidencia);
+    console.log(req.params.tipoIncidencia)
+}
+
+//Obtener los typos de incidencias 
+IncidenciasCtrl.getTipos = async (req, res) => {
+    const traficoJson = await incidencia.distinct("alerts.type");
+    res.json(traficoJson);
+}
 
 module.exports=IncidenciasCtrl;
-
-
-
 
 
