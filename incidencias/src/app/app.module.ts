@@ -18,7 +18,14 @@ import { ChartComponent } from './components/chart/chart.component';
 import { MapComponent } from './components/map/map.component';
 import { MapService } from './services/map.service';
 
+
 import * as $ from 'jquery';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//Api datePiker
+import {MatDatepickerModule} from '@angular/material/datepicker';
+//import {MatNativeDateModule}from '@angular/material/core/';
+import { MatMomentDateModule} from "@angular/material-moment-adapter";
+import {MatFormFieldModule} from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,9 +40,16 @@ import * as $ from 'jquery';
     APP_ROUTING,
     HttpClientModule,
     ChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    //MatNativeDateModule,
+    MatFormFieldModule,
+    MatMomentDateModule
+    
+
   ],
-  providers: [MapService],
+  providers: [MapService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

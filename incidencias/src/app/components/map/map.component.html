@@ -1,9 +1,21 @@
+<form #datosForm="ngForm" (ngSubmit)="buscarIncidencias(datosForm)">
+
+    <!-- <input class="form-control" type="hidden" name="_id" #_id="ngModel"[(ngModel)]="obtenerfecha" -->
+    <!-- <input matInput [matDatepicker]="matDatepicker" disabled #obtenerFecha="ngModel"[(ngModel)]="obtenerFecha"> -->
+    <input matInput [matDatepicker]="matDatepicker" disabled name="obtenerFecha" [(ngModel)]="obtenerFecha">
+    <mat-datepicker-toggle  [for]="matDatepicker" ></mat-datepicker-toggle>
+    <mat-datepicker #matDatepicker disabled='false'></mat-datepicker>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+{{obtenerFecha}}
+
 <div class="container-fluid">
     <h3>Clustering</h3>
     <div id="mapClustering"></div>
 </div>
 
 <div class="container text-center">
+
     <div class="row ">
         <div class="col-sm-6">
             <div class="card mb-4">

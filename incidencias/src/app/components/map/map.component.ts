@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MapService } from "../../services/map.service";
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-
+import { Form } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -11,14 +12,19 @@ import 'leaflet.markercluster';
 })
 
 export class MapComponent implements OnInit {
-
+   
     mapServiceU : MapService;
-    
+    obtenerFecha:string="";
     constructor(public mapService:MapService) {
         this.mapServiceU = mapService;
     }
 
+buscarIncidencias(datosForm:NgForm) {
+    console.log((<any>this.obtenerFecha).format("YYYY-MM-DD HH:mm"));
+    //console.log(datosForm.value.obtenerFecha);
+    console.log("hola");
     
+}  
 
     
     ngOnInit() {
