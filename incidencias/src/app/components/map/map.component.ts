@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck, AfterViewInit } from '@angular/core';
 import { MapService } from "../../services/map.service";
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { Form } from '@angular/forms';
 import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { stringify } from 'querystring';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -11,33 +13,53 @@ import { NgForm } from '@angular/forms';
     providers:[MapService]
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements AfterViewInit{
    
     mapServiceU : MapService;
     obtenerFecha:string="";
+    mapClustering : any;
+    markersCluster;
+    markerListCluster;
+    lista:string[]=[""];
+    selectedOption:string;
+    ciudad:string;
+    
     constructor(public mapService:MapService) {
         this.mapServiceU = mapService;
     }
+    
+    /*
+    buscarIncidencias(m:any) {
+        if(this.obtenerFecha==""){
+            alert("undefined");
+        }else{
+            console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));
+            //console.log(datosForm.value.obtenerFecha);
+        }
+    }
+    */
+    
+    
+    ngAfterViewInit() {
+        
 
-buscarIncidencias(datosForm:NgForm) {
-    console.log((<any>this.obtenerFecha).format("YYYY-MM-DD HH:mm"));
-    //console.log(datosForm.value.obtenerFecha);
-    console.log("hola");
-    
-}  
-
-    
-    ngOnInit() {
-    
-        let mymap = L.map('mapid').setView([19.37596, -99.07000], 12);
-        let mymap2 = L.map('mapid2').setView([19.37596, -99.07000], 12);
-        let mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
-        let mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
-        let mapClustering = L.map('mapClustering').setView([19.37596, -99.07000], 11);
-        let mapTrafico = L.map('mapTrafico').setView([19.37596, -99.07000], 11);
+        
+            this.mapServiceU.getCities().subscribe( ( data:any ) => {
+                this.lista=Object.values(data);
+                console.log(this.lista);
+            });
+            
+            
+        
+        var mymap = L.map('mapid').setView([19.37596, -99.07000], 12);
+        var mymap2 = L.map('mapid2').setView([19.37596, -99.07000], 12);
+        var mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
+        var mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
+        this.mapClustering = L.map('mapClustering').setView([19.37596, -99.07000], 11);
+        var mapTrafico = L.map('mapTrafico').setView([19.37596, -99.07000], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="copyright">Openstreetmap</a>'
-        }).addTo(mapClustering);
+        }).addTo(this.mapClustering);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="copyright">Openstreetmap</a>'
@@ -121,9 +143,11 @@ buscarIncidencias(datosForm:NgForm) {
 
 
             this.mapServiceU.getCallesCerradas2().subscribe( ( data:any ) => {
-                clearMap(mapClustering);
-                let markers = L.markerClusterGroup();
-                let markerList = [];    
+                clearMap(this.mapClustering);
+                //let markers = L.markerClusterGroup();
+                //let markerList = [];    
+                this.markersCluster = L.markerClusterGroup();
+                this.markerListCluster = [];
     
                 let Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
                     iconSize: [20, 20],
@@ -143,16 +167,16 @@ buscarIncidencias(datosForm:NgForm) {
     
                     if (data[0].jams[i].blockType == "ROAD_CLOSED_EVENT") {
                         let marker = L.marker(L.latLng(data[0].jams[i].line[0].y, data[0].jams[i].line[0].x), {icon: Icon1}).bindPopup(opcionesPopUp);
-                        markerList.push(marker);
+                        this.markerListCluster.push(marker);
                     }
                     else if(data[0].jams[i].blockType == "ROAD_CLOSED_CONSTRUCTION") {
                         let marker2 = L.marker(L.latLng(data[0].jams[i].line[0].y, data[0].jams[i].line[0].x), {icon: Icon2}).bindPopup(opcionesPopUp);
-                        markerList.push(marker2);
+                        this.markerListCluster.push(marker2);
                     }
                 
                 }
-                markers.addLayers(markerList);
-                mapClustering.addLayer(markers);
+                this.markersCluster.addLayers(this.markerListCluster);
+                this.mapClustering.addLayer(this.markersCluster);
                 setTimeout(function f(){console.log("outCluster");},1000);
             });
             
@@ -237,11 +261,55 @@ buscarIncidencias(datosForm:NgForm) {
             let marker;
             L.geoJSON(data[0]).addTo(mymap5);
         });
-        
-
+        //this.buscarIncidencias(mapClustering);
     }//FIN OnInit
 
+    buscarIncidencias(datosForm) {
+        //console.log(datosForm.value);
+        //this.printOption=this.selectedOption;
+        console.log(this.selectedOption);
+        this.ciudad=this.selectedOption;
+        //clearMap(this.mapClustering);//Limpiamos el mapa
+        this.markersCluster.removeLayers(this.markerListCluster);
+        this.markersCluster = L.markerClusterGroup();
+        this.markerListCluster = [];
+        
+
+        if(this.obtenerFecha==""){
+            //alert(city);
+        }else{
+            let fecha = (<any>this.obtenerFecha).format("YYYY-MM-DD");
+            //Imagenes (SE PUEDEN DECLARAR GLOBALES DESDE ANTES)   
+            let Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
+                    iconSize: [20, 20],
+                    iconAnchor: [22, 20],
+                    popupAnchor: [-3, -76]});
+            this.mapServiceU.getTraficoCluster(fecha,this.ciudad).subscribe( ( data:any ) => {
+                for (let i = 0; i < data.length; i++) {
+                    let marker = L.marker(L.latLng(data[i].line[0].y, data[i].line[0].x), {icon: Icon1});
+                    this.markerListCluster.push(marker);
+                    /*
+                    if (data[0].jams[i].blockType == "ROAD_CLOSED_EVENT") {
+                        let marker = L.marker(L.latLng(data[0].jams[i].line[0].y, data[0].jams[i].line[0].x), {icon: Icon1});
+                        this.markerListCluster.push(marker);
+                    }*/
+                }
+                this.markersCluster.addLayers(this.markerListCluster);
+                this.mapClustering.addLayer(this.markersCluster);
+            });
+            /*
+            let marker = L.marker(L.latLng(40.737, -73.923), {icon: Icon1});
+            markerList.push(marker);
+            this.clearMap(this.mapClustering);//Limpiamos el mapa
+            markers.addLayers(markerList);
+            this.mapClustering.panTo(new L.LatLng(40.737, -73.923));
+            this.mapClustering.addLayer(markers);
+            */
+            console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));
+        }
+    }
     
     
+
 
 }//fin clase
