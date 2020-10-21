@@ -26,6 +26,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 //import {MatNativeDateModule}from '@angular/material/core/';
 import { MatMomentDateModule} from "@angular/material-moment-adapter";
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatDatepickerModule,
     //MatNativeDateModule,
     MatFormFieldModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    NgbModule
     
 
   ],

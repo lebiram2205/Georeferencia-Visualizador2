@@ -54,12 +54,13 @@ IncidenciasCtrl.posttrafico=async(req, res)=>{
 
 IncidenciasCtrl.getCities=async(req, res)=>{
     //En req.params se encuentra el dato recibido por URL en formato JSON
-   const traficoJson = await incidencia.distinct('alerts.city');
+   const traficoJson = await incidencia.distinct('jams.city');
    res.json(traficoJson);
    console.log(req.params.startTime);
 };
 
-IncidenciasCtrl.consultas=async(req, res)=>{
+//Obtiene los jams de una determinada fecha y lugar
+IncidenciasCtrl.getJams=async(req, res)=>{
    //const traficoJson = await incidencia.find({"alerts.reportBy":"Corichido"},{"startTime":1, "_id":0});
    //const traficoJson = await incidencia.distinct("alerts.city");
    //const traficoJson = await incidencia.distinct("alerts.reportBy");
@@ -68,13 +69,24 @@ IncidenciasCtrl.consultas=async(req, res)=>{
    const traficoJson = await incidencia.aggregate ([
     {$match: {"startTime": {"$regex": req.params.fecha}}},
     {$unwind: '$jams'},
-    {$match: {'jams.city': req.params.ciudad}},
+    {$match: {'jams.city':{"$regex": req.params.ciudad}}},
     {$group: {_id: '$jams.id', line: {$first: '$jams.line'}}}
    ]);
    
    res.json(traficoJson);
-   // console.log(req.params.variable);
 }
+
+//Obtiene los jams de una determinada fecha solamente
+IncidenciasCtrl.getAllJams=async(req, res)=>{
+    const traficoJson = await incidencia.aggregate ([
+     {$match: {"startTime": {"$regex": req.params.fecha}}},
+     {$unwind: '$jams'},
+     //{$match: {'jams.city':{"$regex": req.params.ciudad}}},
+     {$group: {_id: '$jams.id', line: {$first: '$jams.line'}}}
+    ]);
+    
+    res.json(traficoJson);
+ }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 IncidenciasCtrl.getTraffic=async(req,res)=>{
     var file;

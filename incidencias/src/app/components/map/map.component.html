@@ -1,16 +1,19 @@
-<form #datosForm="ngForm" (ngSubmit)="buscarIncidencias(datosForm)">
-    <!-- <input class="form-control" type="hidden" name="_id" #_id="ngModel"[(ngModel)]="obtenerfecha" -->
-    <!-- <input matInput [matDatepicker]="matDatepicker" disabled #obtenerFecha="ngModel"[(ngModel)]="obtenerFecha"> -->
-    <input matInput [matDatepicker]="matDatepicker" disabled name="obtenerFecha" [(ngModel)]="obtenerFecha">
+<!--FORMULARIO DE INCIDENCIAS-->
+<form class="formStructure" #datosForm="ngForm" (ngSubmit)="buscarIncidencias()">
+    <!--CALENDARIO-->
+    <input class="form "  matInput [matDatepicker]="matDatepicker" disabled name="obtenerFecha" [(ngModel)]="obtenerFecha">
     <mat-datepicker-toggle  [for]="matDatepicker" ></mat-datepicker-toggle>
     <mat-datepicker #matDatepicker disabled='false'></mat-datepicker>
-    <div ng-app="myApp" ng-controller="myCtrl">
-        <select id="seleccionado" name="seleccionado" [(ngModel)]="selectedOption"  >
+    <!--SELECTOR DE LUGARES-->
+    <div class="form select" ng-app="myApp" ng-controller="myCtrl">
+        <select id="seleccionado" name="seleccionado" [(ngModel)]="selectedOptionLugar"  >
             <option hidden selected>Seleccione Ciudad</option>
             <option [value]="item" *ngFor="let item of lista">{{item}}</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Buscar</button>
+    <!--SELECTOR DE HORARIO-->
+    <div class="form" ><ngb-timepicker name="time"  [(ngModel)]="time"></ngb-timepicker></div>
+    <button type="submit" class="btn btn-primary form">Buscar</button>
 </form>
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnInit, DoCheck, AfterViewInit, Injectable } from '@angular/core';
 import { MapService } from "../../services/map.service";
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
@@ -6,6 +6,12 @@ import { Form } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { stringify } from 'querystring';
+
+
+import {NgbTimeStruct, NgbTimeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import { SelectionModel } from '@angular/cdk/collections';
+
+
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -13,39 +19,32 @@ import { stringify } from 'querystring';
     providers:[MapService]
 })
 
-export class MapComponent implements AfterViewInit{
-   
+export class MapComponent implements AfterViewInit {
+    
     mapServiceU : MapService;
+
+    //DECLARACION DE VARIABLES QUE SE IMPLEMENTAN EN EL FORMULARIO
     obtenerFecha:string="";
+    lista:string[]=[""];//agrupa todos los lugares con incidencias
+    arr:any[]=[];
+    selectedOptionLugar:string;
+    ciudad:string;
+    time:string;
+    //MAPA CLUSTER VISTO POR TODOS LOS METODOS DE LA CLASE
     mapClustering : any;
     markersCluster;
     markerListCluster;
-    lista:string[]=[""];
-    selectedOption:string;
-    ciudad:string;
     
     constructor(public mapService:MapService) {
         this.mapServiceU = mapService;
     }
     
-    /*
-    buscarIncidencias(m:any) {
-        if(this.obtenerFecha==""){
-            alert("undefined");
-        }else{
-            console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));
-            //console.log(datosForm.value.obtenerFecha);
-        }
-    }
-    */
-    
-    
     ngAfterViewInit() {
-        
 
-        
+        //Obtenemos de manera dinamica los lugares a mostrar en el input select
             this.mapServiceU.getCities().subscribe( ( data:any ) => {
                 this.lista=Object.values(data);
+                this.lista.push("Todos");
                 console.log(this.lista);
             });
             
@@ -55,6 +54,7 @@ export class MapComponent implements AfterViewInit{
         var mymap2 = L.map('mapid2').setView([19.37596, -99.07000], 12);
         var mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
         var mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
+        //INICIALIZAMOS EL MAP CLUSTERING 
         this.mapClustering = L.map('mapClustering').setView([19.37596, -99.07000], 11);
         var mapTrafico = L.map('mapTrafico').setView([19.37596, -99.07000], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -138,10 +138,10 @@ export class MapComponent implements AfterViewInit{
                         }
                         firstpolyline.addTo(mapTrafico);
                     }
-                }setTimeout(function f(){console.log("out");},1000); 
+                }setTimeout(function f(){console.log("out");},100); 
             });
 
-
+            
             this.mapServiceU.getCallesCerradas2().subscribe( ( data:any ) => {
                 clearMap(this.mapClustering);
                 //let markers = L.markerClusterGroup();
@@ -177,16 +177,14 @@ export class MapComponent implements AfterViewInit{
                 }
                 this.markersCluster.addLayers(this.markerListCluster);
                 this.mapClustering.addLayer(this.markersCluster);
-                setTimeout(function f(){console.log("outCluster");},1000);
+                setTimeout(function f(){console.log("outCluster");},100);
             });
             
             cont=cont+1;
-            setTimeout(function f(){console.log("wait");},1000); 
+            setTimeout(function f(){console.log("wait");},100); 
 
         }while(cont<1); //FIN DE LA PELICULA
         console.log("FINISH");   
-            //setTimeout(animate, 3000);
-        //}setInterval(animate, 3000);  //fin del animate
     
         let Icon = L.icon({iconUrl: '../.././assets/trafficlight.png',
             iconSize: [20, 20],
@@ -261,55 +259,61 @@ export class MapComponent implements AfterViewInit{
             let marker;
             L.geoJSON(data[0]).addTo(mymap5);
         });
-        //this.buscarIncidencias(mapClustering);
+        
     }//FIN OnInit
+    
 
-    buscarIncidencias(datosForm) {
-        //console.log(datosForm.value);
-        //this.printOption=this.selectedOption;
-        console.log(this.selectedOption);
-        this.ciudad=this.selectedOption;
-        //clearMap(this.mapClustering);//Limpiamos el mapa
+    //Metodo SUBMIT
+    buscarIncidencias() {
+
+        console.log(this.selectedOptionLugar);
+        this.ciudad=this.selectedOptionLugar;
+        //ñIMPIAMOS EL MAPA CLUSTER
         this.markersCluster.removeLayers(this.markerListCluster);
         this.markersCluster = L.markerClusterGroup();
         this.markerListCluster = [];
-        
 
+        let cadenaTime:string;
+        this.arr=Object.values(this.time); //Almacenamos el objeto arrojado por la variable time (hora y minuto)
+
+        //CONVIERTE LOS VALORES DE LA HORA Y MINUTO A DOS CIFRAS
+        function timeText(d) {
+            if(d<10){return (d < 10) ? '0' + d.toString() : d.toString();}
+            else{return d.toString();}
+        }
+        
+        //CONCATENAMOS LA HORA Y MINUTOS
+        cadenaTime = timeText(this.arr[0])+":"+timeText(this.arr[1]);
+
+        //VALIDACION
         if(this.obtenerFecha==""){
-            //alert(city);
+            alert("ERROR: Ingrese fecha");
         }else{
+            //CONVERTIMOS LA FECHA AL FORMATO UTILIZADO EN LOS JSON DE LA BD
             let fecha = (<any>this.obtenerFecha).format("YYYY-MM-DD");
+            //CONCATENAMOS EL TIEMPO Y LA FECHA PARA NUESTRA CONSULTA
+            let horarioFinal: string= fecha + " " + cadenaTime;
             //Imagenes (SE PUEDEN DECLARAR GLOBALES DESDE ANTES)   
             let Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
                     iconSize: [20, 20],
                     iconAnchor: [22, 20],
                     popupAnchor: [-3, -76]});
-            this.mapServiceU.getTraficoCluster(fecha,this.ciudad).subscribe( ( data:any ) => {
+            if(this.ciudad=="Todos"){this.ciudad="";}
+            this.mapServiceU.getTraficoCluster(horarioFinal,this.ciudad).subscribe( ( data:any ) => {
                 for (let i = 0; i < data.length; i++) {
                     let marker = L.marker(L.latLng(data[i].line[0].y, data[i].line[0].x), {icon: Icon1});
                     this.markerListCluster.push(marker);
-                    /*
-                    if (data[0].jams[i].blockType == "ROAD_CLOSED_EVENT") {
-                        let marker = L.marker(L.latLng(data[0].jams[i].line[0].y, data[0].jams[i].line[0].x), {icon: Icon1});
-                        this.markerListCluster.push(marker);
-                    }*/
                 }
                 this.markersCluster.addLayers(this.markerListCluster);
                 this.mapClustering.addLayer(this.markersCluster);
             });
-            /*
-            let marker = L.marker(L.latLng(40.737, -73.923), {icon: Icon1});
-            markerList.push(marker);
-            this.clearMap(this.mapClustering);//Limpiamos el mapa
-            markers.addLayers(markerList);
-            this.mapClustering.panTo(new L.LatLng(40.737, -73.923));
-            this.mapClustering.addLayer(markers);
-            */
+            
+            
+            
+            
             console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));
         }
-    }
+    }//Fin SUBMIT
     
     
-
-
 }//fin clase

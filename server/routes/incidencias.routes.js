@@ -8,9 +8,11 @@ app.get('/trafico',incidencia.gettrafico);
 app.post('/trafico', incidencia.posttrafico);
 app.get('/',incidencia.gettraficoById);
 
-//aquí va el nombre de la variable de fecha
+//Consultas implementadas para el formulario
 app.get('/trafico/cities',incidencia.getCities);
-app.get('/trafico/:fecha/:ciudad',incidencia.consultas);
+app.get('/trafico/jams/:fecha/:ciudad',incidencia.getJams);
+app.get('/trafico/jams/:fecha',incidencia.getAllJams);
+
 
 app.get('/traffic', incidencia.getTraffic );
 app.get('/semaforoizt', incidencia.semaforoIzt  );
