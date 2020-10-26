@@ -25,6 +25,7 @@
     "@angular/router": "~10.1.1",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "@popperjs/core": "^2.4.4",
+    "@sweetalert2/ngx-sweetalert2": "^8.1.1",
     "@types/jquery": "^3.5.1",
     "bootstrap": "^4.5.2",
     "chart.js": "^2.9.3",
@@ -35,6 +36,7 @@
     "ng2-charts": "^2.4.1",
     "popper": "^1.0.1",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^10.8.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

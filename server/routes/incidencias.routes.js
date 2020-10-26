@@ -13,6 +13,7 @@ app.get('/trafico/cities',incidencia.getCities);
 app.get('/trafico/jams/:fecha/:ciudad',incidencia.getJams);
 app.get('/trafico/jams/:fecha',incidencia.getAllJams);
 
+app.get('/traffic/tipos', incidencia.incidenciaTipos);
 
 app.get('/traffic', incidencia.getTraffic );
 app.get('/semaforoizt', incidencia.semaforoIzt  );

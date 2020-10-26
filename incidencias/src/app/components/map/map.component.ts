@@ -12,6 +12,8 @@ import {NgbTimeStruct, NgbTimeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { SelectionModel } from '@angular/cdk/collections';
 
 
+
+
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -34,10 +36,33 @@ export class MapComponent implements AfterViewInit {
     mapClustering : any;
     markersCluster;
     markerListCluster;
+
+    contadorChecked = 0;
+    listaIncidenciasCheck;
+    markerListClusterCheck = [];
+    aux = [];
+    Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
+                    iconSize: [20, 20],
+                    iconAnchor: [22, 20],
+                    popupAnchor: [-3, -76]});
     
     constructor(public mapService:MapService) {
         this.mapServiceU = mapService;
     }
+
+
+    clearMap(m:any) {
+        for (let i in m._layers) {
+            if (m._layers[i]._path != undefined) {
+                try {
+                    m.removeLayer(m._layers[i]);
+                } catch (e) {
+                    console.log("problem with " + e + m._layers[i]);
+                }
+            }
+        }
+    }
+
     
     ngAfterViewInit() {
 
@@ -93,7 +118,7 @@ export class MapComponent implements AfterViewInit {
                         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 id: 'mapbox/streets-v11'
                 }).addTo(mymap5);
-        
+        /** 
         function clearMap(m:any) {
             for (let i in m._layers) {
                 if (m._layers[i]._path != undefined) {
@@ -104,7 +129,7 @@ export class MapComponent implements AfterViewInit {
                     }
                 }
             }
-        }
+        }**/
         var cont=0;
         let firstpolyline;
         //function animate(){ INICIO DE LA PELICULA
@@ -113,7 +138,7 @@ export class MapComponent implements AfterViewInit {
             //clearMap(mapTrafico);
             
             this.mapServiceU.getTrafico().subscribe( ( data:any ) => {
-                clearMap(mapTrafico);
+                this.clearMap(mapTrafico);
                 for (let i = 0; i < data[0].jams.length; i++) {
                     for (let j = 1; j < (data[0].jams[i].line.length - 1); j++) {
 
@@ -143,7 +168,7 @@ export class MapComponent implements AfterViewInit {
 
             
             this.mapServiceU.getCallesCerradas2().subscribe( ( data:any ) => {
-                clearMap(this.mapClustering);
+                this.clearMap(this.mapClustering);
                 //let markers = L.markerClusterGroup();
                 //let markerList = [];    
                 this.markersCluster = L.markerClusterGroup();
@@ -268,8 +293,11 @@ export class MapComponent implements AfterViewInit {
 
         console.log(this.selectedOptionLugar);
         this.ciudad=this.selectedOptionLugar;
-        //ñIMPIAMOS EL MAPA CLUSTER
+        //LIMPIAMOS EL MAPA CLUSTER
         this.markersCluster.removeLayers(this.markerListCluster);
+        if(this.markerListClusterCheck.length>0){
+            this.markersCluster.removeLayers(this.markerListClusterCheck);
+        }
         this.markersCluster = L.markerClusterGroup();
         this.markerListCluster = [];
 
@@ -294,14 +322,12 @@ export class MapComponent implements AfterViewInit {
             //CONCATENAMOS EL TIEMPO Y LA FECHA PARA NUESTRA CONSULTA
             let horarioFinal: string= fecha + " " + cadenaTime;
             //Imagenes (SE PUEDEN DECLARAR GLOBALES DESDE ANTES)   
-            let Icon1 = L.icon({iconUrl: '../.././assets/accesdenied.png',
-                    iconSize: [20, 20],
-                    iconAnchor: [22, 20],
-                    popupAnchor: [-3, -76]});
+            //****** */
             if(this.ciudad=="Todos"){this.ciudad="";}
             this.mapServiceU.getTraficoCluster(horarioFinal,this.ciudad).subscribe( ( data:any ) => {
+                this.listaIncidenciasCheck=data;
                 for (let i = 0; i < data.length; i++) {
-                    let marker = L.marker(L.latLng(data[i].line[0].y, data[i].line[0].x), {icon: Icon1});
+                    let marker = L.marker(L.latLng(data[i].location.y, data[i].location.x), {icon: this.Icon1});
                     this.markerListCluster.push(marker);
                 }
                 this.markersCluster.addLayers(this.markerListCluster);
@@ -309,11 +335,81 @@ export class MapComponent implements AfterViewInit {
             });
             
             
-            
-            
             console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));
         }
     }//Fin SUBMIT
     
     
+    //CHECKBOX
+    filtraIncidencia(e:any){
+        this.markersCluster.removeLayers(this.markerListCluster);
+        this.markersCluster.removeLayers(this.markerListClusterCheck);
+        this.markerListClusterCheck = [];
+        this.clearMap(this.mapClustering);
+        var remove = ( arr, item ) => {
+            var i = arr.indexOf( item );
+            i !== -1 && arr.splice( i, 1 );
+          };
+        
+        if(e.target.checked){ 
+            this.contadorChecked = this.contadorChecked + 1;
+            this.markersCluster = L.markerClusterGroup();
+            this.markersCluster.removeLayers(this.markerListCluster);
+            this.markersCluster.removeLayers(this.markerListClusterCheck);
+            console.log(this.listaIncidenciasCheck);
+            for (let x of this.listaIncidenciasCheck) {
+                  if(x.Type == e.target.value){
+                    this.aux.push(x);
+                  } 
+              }
+            this.markerListClusterCheck = [];
+            for (let i = 0; i < this.aux.length; i++) {
+                console.log(i);
+                let marker = L.marker(L.latLng(this.aux[i].location.y, this.aux[i].location.x), {icon: this.Icon1});
+                this.markerListClusterCheck.push(marker);
+            }
+            this.markersCluster.addLayers(this.markerListClusterCheck);
+            this.mapClustering.addLayer(this.markersCluster);
+            console.log(this.aux);
+            console.log("contador "+this.contadorChecked);
+            
+        }else{
+            this.contadorChecked = this.contadorChecked - 1;
+            this.markersCluster = L.markerClusterGroup();
+            this.markersCluster.removeLayers(this.markerListCluster);
+            this.markersCluster.removeLayers(this.markerListClusterCheck);
+            console.log("*****");
+            console.log(this.aux.length);
+            let longitud = this.aux.length;
+
+            for (let x= longitud-1; x>=0 ; x--) {
+                console.log(x);
+                if(this.aux[x].Type == e.target.value){
+                  remove(this.aux,this.aux[x]);
+                } 
+            }
+            console.log(this.aux);
+            this.markerListClusterCheck = [];
+            for (let i = 0; i < this.aux.length; i++) {
+                let marker = L.marker(L.latLng(this.aux[i].location.y, this.aux[i].location.x), {icon: this.Icon1});
+                this.markerListClusterCheck.push(marker);
+            }
+            this.markersCluster.addLayers(this.markerListClusterCheck);
+            this.mapClustering.addLayer(this.markersCluster);
+            console.log("contador "+this.contadorChecked);
+            
+            if(this.contadorChecked == 0){
+                for (let i = 0; i < this.listaIncidenciasCheck.length; i++) {
+                    let marker = L.marker(L.latLng(this.listaIncidenciasCheck[i].location.y, this.listaIncidenciasCheck[i].location.x), {icon: this.Icon1});
+                    this.markerListClusterCheck.push(marker);
+                }
+                this.markersCluster.addLayers(this.markerListClusterCheck);
+                this.mapClustering.addLayer(this.markersCluster);
+            }
+        }
+        
+    }
+
+
+
 }//fin clase

@@ -27,6 +27,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule} from "@angular/material-moment-adapter";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,8 +48,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     //MatNativeDateModule,
     MatFormFieldModule,
     MatMomentDateModule,
-    NgbModule
-    
+    NgbModule,
+    SweetAlert2Module.forRoot()
 
   ],
   providers: [MapService ],

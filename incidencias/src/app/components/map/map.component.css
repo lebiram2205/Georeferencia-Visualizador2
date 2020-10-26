@@ -1,5 +1,7 @@
 @import "~leaflet.markercluster/dist/MarkerCluster.css";
-
+.form-check-input, .form-check-label{
+  margin-right: 0.5em;
+}
 .form{
   margin-left: 1em;
 }

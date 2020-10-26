@@ -68,9 +68,9 @@ IncidenciasCtrl.getJams=async(req, res)=>{
    //const traficoJson = await incidencia.find({"startTime":{"$regex": req.params.variable}}).limit(1);
    const traficoJson = await incidencia.aggregate ([
     {$match: {"startTime": {"$regex": req.params.fecha}}},
-    {$unwind: '$jams'},
-    {$match: {'jams.city':{"$regex": req.params.ciudad}}},
-    {$group: {_id: '$jams.id', line: {$first: '$jams.line'}}}
+    {$unwind: '$alerts'},
+    {$match: {'alerts.city':{"$regex": req.params.ciudad}}},
+    {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'}, Type: {$first: '$alerts.type'}}}
    ]);
    
    res.json(traficoJson);
@@ -80,9 +80,9 @@ IncidenciasCtrl.getJams=async(req, res)=>{
 IncidenciasCtrl.getAllJams=async(req, res)=>{
     const traficoJson = await incidencia.aggregate ([
      {$match: {"startTime": {"$regex": req.params.fecha}}},
-     {$unwind: '$jams'},
+     {$unwind: '$alerts'},
      //{$match: {'jams.city':{"$regex": req.params.ciudad}}},
-     {$group: {_id: '$jams.id', line: {$first: '$jams.line'}}}
+     {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'}}}
     ]);
     
     res.json(traficoJson);
@@ -141,6 +141,10 @@ IncidenciasCtrl.incidencia=async(req,res)=>{
     res.json(trafico);
 }
 
+IncidenciasCtrl.incidenciaTipos=async(req,res)=>{
+    const trafico = await incidencia.distinct('alerts.type');
+    res.json(trafico);
+}
 module.exports=IncidenciasCtrl;
 
 
