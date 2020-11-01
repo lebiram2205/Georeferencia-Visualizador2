@@ -6,14 +6,14 @@
     <mat-datepicker #matDatepicker disabled='false'></mat-datepicker>
     <!--SELECTOR DE LUGARES-->
     <div class="form select" ng-app="myApp" ng-controller="myCtrl">
-        <select id="seleccionado" name="seleccionado" [(ngModel)]="selectedOptionLugar"  >
+        <select id="seleccionado" name="seleccionado" [(ngModel)]="selectedOptionLugar">
             <option hidden selected>Seleccione Ciudad</option>
             <option [value]="item" *ngFor="let item of lista">{{item}}</option>
         </select>
     </div>
     <!--SELECTOR DE HORARIO-->
     <div class="form" ><ngb-timepicker name="time"  [(ngModel)]="time"></ngb-timepicker></div>
-    <button type="submit" class="btn btn-primary form">Buscar</button>
+    <button type="submit" class="btn btn-primary form" >Buscar</button>
 </form>
 
 <!--Filtrado de Incidencias
@@ -34,7 +34,7 @@
     </div>
     <div class="card-body">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="ACCIDENT" (change)="filtraIncidencia($event)">
+            <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="ACCIDENT" (change)="filtraIncidencia($event)">
             <label class="form-check-label" for="inlineCheckbox1">ACCIDENT</label>
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="CHIT_CHAT" (change)="filtraIncidencia($event)">
             <label class="form-check-label" for="inlineCheckbox1">CHIT_CHAT</label>
@@ -45,8 +45,13 @@
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="POLICE" (change)="filtraIncidencia($event)">
             <label class="form-check-label" for="inlineCheckbox1">POLICE</label>
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="ROAD_CLOSED" (change)="filtraIncidencia($event)">
-            <label class="form-check-label" for="inlineCheckbox1">ROAD_CLOSED</label>
-        </div>
+            <label class="form-check-label" for="inlineCheckbox1">ROAD_CLOSED</label>-->
+            <label class="form-check-label" *ngFor="let incidencia of listaIncidencias">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{incidencia.name}} [(ngModel)]="incidencia.check" (change)="filtraIncidencia($event)">
+                {{incidencia.name}}
+            </label>
+        </div>>
+        
      
     </div>
   </div>

@@ -37,6 +37,16 @@ export class MapComponent implements AfterViewInit {
     markersCluster;
     markerListCluster;
 
+    isChecked: Boolean;
+    listaIncidencias = [
+        {name: "ACCIDENT", check: false},
+        {name: "CHIT_CHAT", check: false},
+        {name: "HAZARD", check: false},
+        {name: "JAM", check: false},
+        {name: "POLICE", check: false},
+        {name: "ROAD_CLOSED" ,check: false}
+    ]
+
     contadorChecked = 0;
     listaIncidenciasCheck;
     markerListClusterCheck = [];
@@ -290,39 +300,42 @@ export class MapComponent implements AfterViewInit {
 
     //Metodo SUBMIT
     buscarIncidencias() {
-
-        console.log(this.selectedOptionLugar);
+        for(let i of this.listaIncidencias){
+            i.check=false;
+        }
+        this.aux = [];
+        this.contadorChecked = 0;
+        //console.log(this.selectedOptionLugar);
         this.ciudad=this.selectedOptionLugar;
-        //LIMPIAMOS EL MAPA CLUSTER
-        this.markersCluster.removeLayers(this.markerListCluster);
-        if(this.markerListClusterCheck.length>0){
-            this.markersCluster.removeLayers(this.markerListClusterCheck);
-        }
-        this.markersCluster = L.markerClusterGroup();
-        this.markerListCluster = [];
-
-        let cadenaTime:string;
-        this.arr=Object.values(this.time); //Almacenamos el objeto arrojado por la variable time (hora y minuto)
-
-        //CONVIERTE LOS VALORES DE LA HORA Y MINUTO A DOS CIFRAS
-        function timeText(d) {
-            if(d<10){return (d < 10) ? '0' + d.toString() : d.toString();}
-            else{return d.toString();}
-        }
-        
-        //CONCATENAMOS LA HORA Y MINUTOS
-        cadenaTime = timeText(this.arr[0])+":"+timeText(this.arr[1]);
-
         //VALIDACION
-        if(this.obtenerFecha==""){
-            alert("ERROR: Ingrese fecha");
-        }else{
+        if(this.ciudad==null || this.time==null || <any>this.obtenerFecha=="" ){
+            alert("ERROR: Datos invalidos");
+        }
+        else{
+            //LIMPIAMOS EL MAPA CLUSTER
+            this.markersCluster.removeLayers(this.markerListCluster);
+            if(this.markerListClusterCheck.length>0){
+                this.markersCluster.removeLayers(this.markerListClusterCheck);
+            }
+            this.markersCluster = L.markerClusterGroup();
+            this.markerListCluster = [];
+            
+            let cadenaTime:string;
+            this.arr=Object.values(this.time); //Almacenamos el objeto arrojado por la variable time (hora y minuto)
+
+            //CONVIERTE LOS VALORES DE LA HORA Y MINUTO A DOS CIFRAS
+            function timeText(d) {
+                if(d<10){return (d < 10) ? '0' + d.toString() : d.toString();}
+                else{return d.toString();}
+            }
+            
+            //CONCATENAMOS LA HORA Y MINUTOS
+            cadenaTime = timeText(this.arr[0])+":"+timeText(this.arr[1]);
             //CONVERTIMOS LA FECHA AL FORMATO UTILIZADO EN LOS JSON DE LA BD
             let fecha = (<any>this.obtenerFecha).format("YYYY-MM-DD");
             //CONCATENAMOS EL TIEMPO Y LA FECHA PARA NUESTRA CONSULTA
             let horarioFinal: string= fecha + " " + cadenaTime;
-            //Imagenes (SE PUEDEN DECLARAR GLOBALES DESDE ANTES)   
-            //****** */
+            
             if(this.ciudad=="Todos"){this.ciudad="";}
             this.mapServiceU.getTraficoCluster(horarioFinal,this.ciudad).subscribe( ( data:any ) => {
                 this.listaIncidenciasCheck=data;
@@ -333,80 +346,91 @@ export class MapComponent implements AfterViewInit {
                 this.markersCluster.addLayers(this.markerListCluster);
                 this.mapClustering.addLayer(this.markersCluster);
             });
-            
-            
+                
+            this.isChecked=true;
+            this.isChecked=false;
             console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));
         }
     }//Fin SUBMIT
     
+    /*clickFunction(){
+        for(let i of this.listaIncidencias){
+            i.check=false;
+        }
+        
+        this.contadorChecked = 0;
+    }*/
     
     //CHECKBOX
     filtraIncidencia(e:any){
-        this.markersCluster.removeLayers(this.markerListCluster);
-        this.markersCluster.removeLayers(this.markerListClusterCheck);
-        this.markerListClusterCheck = [];
-        this.clearMap(this.mapClustering);
-        var remove = ( arr, item ) => {
-            var i = arr.indexOf( item );
-            i !== -1 && arr.splice( i, 1 );
-          };
-        
-        if(e.target.checked){ 
-            this.contadorChecked = this.contadorChecked + 1;
-            this.markersCluster = L.markerClusterGroup();
+        if(this.listaIncidenciasCheck != null){
             this.markersCluster.removeLayers(this.markerListCluster);
             this.markersCluster.removeLayers(this.markerListClusterCheck);
-            console.log(this.listaIncidenciasCheck);
-            for (let x of this.listaIncidenciasCheck) {
-                  if(x.Type == e.target.value){
-                    this.aux.push(x);
-                  } 
-              }
             this.markerListClusterCheck = [];
-            for (let i = 0; i < this.aux.length; i++) {
-                console.log(i);
-                let marker = L.marker(L.latLng(this.aux[i].location.y, this.aux[i].location.x), {icon: this.Icon1});
-                this.markerListClusterCheck.push(marker);
-            }
-            this.markersCluster.addLayers(this.markerListClusterCheck);
-            this.mapClustering.addLayer(this.markersCluster);
-            console.log(this.aux);
-            console.log("contador "+this.contadorChecked);
+            this.clearMap(this.mapClustering);
+            var remove = ( arr, item ) => {
+                var i = arr.indexOf( item );
+                i !== -1 && arr.splice( i, 1 );
+              };
             
-        }else{
-            this.contadorChecked = this.contadorChecked - 1;
-            this.markersCluster = L.markerClusterGroup();
-            this.markersCluster.removeLayers(this.markerListCluster);
-            this.markersCluster.removeLayers(this.markerListClusterCheck);
-            console.log("*****");
-            console.log(this.aux.length);
-            let longitud = this.aux.length;
-
-            for (let x= longitud-1; x>=0 ; x--) {
-                console.log(x);
-                if(this.aux[x].Type == e.target.value){
-                  remove(this.aux,this.aux[x]);
-                } 
-            }
-            console.log(this.aux);
-            this.markerListClusterCheck = [];
-            for (let i = 0; i < this.aux.length; i++) {
-                let marker = L.marker(L.latLng(this.aux[i].location.y, this.aux[i].location.x), {icon: this.Icon1});
-                this.markerListClusterCheck.push(marker);
-            }
-            this.markersCluster.addLayers(this.markerListClusterCheck);
-            this.mapClustering.addLayer(this.markersCluster);
-            console.log("contador "+this.contadorChecked);
-            
-            if(this.contadorChecked == 0){
-                for (let i = 0; i < this.listaIncidenciasCheck.length; i++) {
-                    let marker = L.marker(L.latLng(this.listaIncidenciasCheck[i].location.y, this.listaIncidenciasCheck[i].location.x), {icon: this.Icon1});
+            if(e.target.checked){ 
+                this.contadorChecked = this.contadorChecked + 1;
+                this.markersCluster = L.markerClusterGroup();
+                this.markersCluster.removeLayers(this.markerListCluster);
+                this.markersCluster.removeLayers(this.markerListClusterCheck);
+                console.log(this.listaIncidenciasCheck);
+                for (let x of this.listaIncidenciasCheck) {
+                      if(x.Type == e.target.value){
+                        this.aux.push(x);
+                      } 
+                  }
+                this.markerListClusterCheck = [];
+                for (let i = 0; i < this.aux.length; i++) {
+                    console.log(i);
+                    let marker = L.marker(L.latLng(this.aux[i].location.y, this.aux[i].location.x), {icon: this.Icon1});
                     this.markerListClusterCheck.push(marker);
                 }
                 this.markersCluster.addLayers(this.markerListClusterCheck);
                 this.mapClustering.addLayer(this.markersCluster);
+                console.log(this.aux);
+                console.log("contador "+this.contadorChecked);
+                
+            }else{
+                this.contadorChecked = this.contadorChecked - 1;
+                this.markersCluster = L.markerClusterGroup();
+                this.markersCluster.removeLayers(this.markerListCluster);
+                this.markersCluster.removeLayers(this.markerListClusterCheck);
+                console.log("*****");
+                console.log(this.aux.length);
+                let longitud = this.aux.length;
+    
+                for (let x= longitud-1; x>=0 ; x--) {
+                    console.log(x);
+                    if(this.aux[x].Type == e.target.value){
+                      remove(this.aux,this.aux[x]);
+                    } 
+                }
+                console.log(this.aux);
+                this.markerListClusterCheck = [];
+                for (let i = 0; i < this.aux.length; i++) {
+                    let marker = L.marker(L.latLng(this.aux[i].location.y, this.aux[i].location.x), {icon: this.Icon1});
+                    this.markerListClusterCheck.push(marker);
+                }
+                this.markersCluster.addLayers(this.markerListClusterCheck);
+                this.mapClustering.addLayer(this.markersCluster);
+                console.log("contador "+this.contadorChecked);
+                
+                if(this.contadorChecked == 0){
+                    for (let i = 0; i < this.listaIncidenciasCheck.length; i++) {
+                        let marker = L.marker(L.latLng(this.listaIncidenciasCheck[i].location.y, this.listaIncidenciasCheck[i].location.x), {icon: this.Icon1});
+                        this.markerListClusterCheck.push(marker);
+                    }
+                    this.markersCluster.addLayers(this.markerListClusterCheck);
+                    this.mapClustering.addLayer(this.markersCluster);
+                }
             }
         }
+
         
     }
 
