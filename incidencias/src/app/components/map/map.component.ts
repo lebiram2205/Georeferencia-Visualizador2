@@ -11,6 +11,7 @@ import { stringify } from 'querystring';
 import {NgbTimeStruct, NgbTimeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { SelectionModel } from '@angular/cdk/collections';
 
+import Swal from 'sweetalert2';
 
 
 
@@ -309,7 +310,11 @@ export class MapComponent implements AfterViewInit {
         this.ciudad=this.selectedOptionLugar;
         //VALIDACION
         if(this.ciudad==null || this.time==null || <any>this.obtenerFecha=="" ){
-            alert("ERROR: Datos invalidos");
+            Swal.fire(
+                'ERROR',
+                'Faltan llenar campos',
+                'error'
+              )
         }
         else{
             //LIMPIAMOS EL MAPA CLUSTER
@@ -338,6 +343,13 @@ export class MapComponent implements AfterViewInit {
             
             if(this.ciudad=="Todos"){this.ciudad="";}
             this.mapServiceU.getTraficoCluster(horarioFinal,this.ciudad).subscribe( ( data:any ) => {
+                if(data == 0){
+                    Swal.fire(
+                        'ERROR',
+                        'No se encontraron Incidencias en esa fecha',
+                        'error'
+                    )
+                }
                 this.listaIncidenciasCheck=data;
                 for (let i = 0; i < data.length; i++) {
                     let marker = L.marker(L.latLng(data[i].location.y, data[i].location.x), {icon: this.Icon1});
@@ -346,20 +358,12 @@ export class MapComponent implements AfterViewInit {
                 this.markersCluster.addLayers(this.markerListCluster);
                 this.mapClustering.addLayer(this.markersCluster);
             });
-                
-            this.isChecked=true;
-            this.isChecked=false;
+            
+            
             console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));
         }
     }//Fin SUBMIT
     
-    /*clickFunction(){
-        for(let i of this.listaIncidencias){
-            i.check=false;
-        }
-        
-        this.contadorChecked = 0;
-    }*/
     
     //CHECKBOX
     filtraIncidencia(e:any){
