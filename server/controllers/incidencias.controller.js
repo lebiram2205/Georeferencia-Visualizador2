@@ -32,9 +32,17 @@ const chart = require('../models/chart');
 const IncidenciasCtrl= {};
 
 IncidenciasCtrl.gettrafico=async(req, res)=>{
-    const trafico= await incidencia.find().limit(1);
+    const trafico= await incidencia.find({}).limit(1);
     res.json(trafico);
 };
+
+IncidenciasCtrl.gettraficoById=async(req, res)=>{
+    const trafico= await incidencia.findById(req.params.startTime);
+    res.json(trafico);
+};
+
+
+
 
 IncidenciasCtrl.posttrafico=async(req, res)=>{
     const trafico=new incidencia(req.body);
@@ -44,29 +52,41 @@ IncidenciasCtrl.posttrafico=async(req, res)=>{
     })
 };
 
-IncidenciasCtrl.getUnJson=async(req, res)=>{
+IncidenciasCtrl.getCities=async(req, res)=>{
     //En req.params se encuentra el dato recibido por URL en formato JSON
-   const traficoJson = await incidencia.find({'startTime': req.params.startTime}, {'_id':0});
+   const traficoJson = await incidencia.distinct('jams.city');
    res.json(traficoJson);
    console.log(req.params.startTime);
 };
 
-IncidenciasCtrl.consultas=async(req, res)=>{
+//Obtiene los jams de una determinada fecha y lugar
+IncidenciasCtrl.getJams=async(req, res)=>{
    //const traficoJson = await incidencia.find({"alerts.reportBy":"Corichido"},{"startTime":1, "_id":0});
    //const traficoJson = await incidencia.distinct("alerts.city");
    //const traficoJson = await incidencia.distinct("alerts.reportBy");
    //const traficoJson = await incidencia.find({"startTime":{"$regex": "2020-01-14 06"}},{"startTime":1, "endTime":1, "_id":0});
-   const traficoJson = await incidencia.find({"startTime":{"$regex": req.params.variable}},{"startTime":1, "endTime":1, "_id":0});
-   /*const traficoJson = await incidencia.aggregate ([
-    {$match: {}},
+   //const traficoJson = await incidencia.find({"startTime":{"$regex": req.params.variable}}).limit(1);
+   const traficoJson = await incidencia.aggregate ([
+    {$match: {"startTime": {"$regex": req.params.fecha}}},
     {$unwind: '$alerts'},
-    {$match: {'alerts.city': 'Coyoacán'}},
-    {$group: {_id: '$_id', alerta: {$addToSet: '$alerts.id'},  alerta:    {$addToSet: '$alerts.street'}}}
-   ]);*/
+    {$match: {'alerts.city':{"$regex": req.params.ciudad}}},
+    {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'}, Type: {$first: '$alerts.type'}}}
+   ]);
    
    res.json(traficoJson);
-   // console.log(req.params.variable);
 }
+
+//Obtiene los jams de una determinada fecha solamente
+IncidenciasCtrl.getAllJams=async(req, res)=>{
+    const traficoJson = await incidencia.aggregate ([
+     {$match: {"startTime": {"$regex": req.params.fecha}}},
+     {$unwind: '$alerts'},
+     //{$match: {'jams.city':{"$regex": req.params.ciudad}}},
+     {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'}, Type: {$first: '$alerts.type'}}}
+    ]);
+    
+    res.json(traficoJson);
+ }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 IncidenciasCtrl.getTraffic=async(req,res)=>{
     var file;
@@ -121,6 +141,10 @@ IncidenciasCtrl.incidencia=async(req,res)=>{
     res.json(trafico);
 }
 
+IncidenciasCtrl.incidenciaTipos=async(req,res)=>{
+    const trafico = await incidencia.distinct('alerts.type');
+    res.json(trafico);
+}
 module.exports=IncidenciasCtrl;
 
 

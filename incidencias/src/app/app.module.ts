@@ -18,7 +18,16 @@ import { ChartComponent } from './components/chart/chart.component';
 import { MapComponent } from './components/map/map.component';
 import { MapService } from './services/map.service';
 
+
 import * as $ from 'jquery';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//Api datePiker
+import {MatDatepickerModule} from '@angular/material/datepicker';
+//import {MatNativeDateModule}from '@angular/material/core/';
+import { MatMomentDateModule} from "@angular/material-moment-adapter";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,9 +42,17 @@ import * as $ from 'jquery';
     APP_ROUTING,
     HttpClientModule,
     ChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    //MatNativeDateModule,
+    MatFormFieldModule,
+    MatMomentDateModule,
+    NgbModule,
+    SweetAlert2Module.forRoot()
+
   ],
-  providers: [MapService],
+  providers: [MapService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

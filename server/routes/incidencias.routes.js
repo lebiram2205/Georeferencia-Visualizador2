@@ -6,10 +6,14 @@ const app=express.Router();
 const incidencia = require('../controllers/incidencias.controller');
 app.get('/trafico',incidencia.gettrafico);
 app.post('/trafico', incidencia.posttrafico);
+app.get('/',incidencia.gettraficoById);
 
-//aquí va el nombre de la variable de fecha
-//app.get('/trafico/:startTime',incidencia.getUnJson);
-app.get('/trafico/:variable',incidencia.consultas);
+//Consultas implementadas para el formulario
+app.get('/trafico/cities',incidencia.getCities);
+app.get('/trafico/jams/:fecha/:ciudad',incidencia.getJams);
+app.get('/trafico/jams/:fecha',incidencia.getAllJams);
+
+app.get('/traffic/tipos', incidencia.incidenciaTipos);
 
 app.get('/traffic', incidencia.getTraffic );
 app.get('/semaforoizt', incidencia.semaforoIzt  );
