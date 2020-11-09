@@ -12,7 +12,7 @@
         </select>
     </div>
     <!--SELECTOR DE HORARIO-->
-    <div class="form" ><ngb-timepicker name="time"  [(ngModel)]="time"></ngb-timepicker></div>
+    <div class="form" ><ngb-timepicker name="time"  [(ngModel)]="time" [minuteStep]="minuteStep"></ngb-timepicker></div>
     <button type="submit" class="btn btn-primary form" >Buscar</button>
 </form>
 
@@ -50,7 +50,7 @@
                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{incidencia.name}} [(ngModel)]="incidencia.check" (change)="filtraIncidencia($event)">
                 {{incidencia.name}}
             </label>
-        </div>>
+        </div>
         
      
     </div>
@@ -63,7 +63,7 @@
 
 <div class="container-fluid">
     <h3>Clustering</h3>
-    <div id="mapClustering"></div>
+    <div #mapClustering id="mapClustering"></div>
 </div>
 
 <div class="container text-center">

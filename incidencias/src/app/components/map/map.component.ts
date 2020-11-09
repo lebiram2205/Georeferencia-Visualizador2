@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, AfterViewInit, Injectable } from '@angular/core';
+import { Component, OnInit, DoCheck, AfterViewInit, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { MapService } from "../../services/map.service";
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
@@ -22,22 +22,26 @@ import Swal from 'sweetalert2';
     providers:[MapService]
 })
 
-export class MapComponent implements AfterViewInit {
-    
-    mapServiceU : MapService;
 
+
+export class MapComponent implements AfterViewInit {
+    @ViewChild('mapClustering', {static: true}) mapContainer:ElementRef;
+    time: NgbTimeStruct = {hour: 0, minute: 2, second: 0};
+    mapServiceU : MapService;
+    //TIMEPICKER
+    minuteStep = 5;
     //DECLARACION DE VARIABLES QUE SE IMPLEMENTAN EN EL FORMULARIO
     obtenerFecha:string="";
     lista:string[]=[""];//agrupa todos los lugares con incidencias
     arr:any[]=[];
     selectedOptionLugar:string;
     ciudad:string;
-    time:string;
+    //time:string;
     //MAPA CLUSTER VISTO POR TODOS LOS METODOS DE LA CLASE
     mapClustering : any;
     markersCluster;
     markerListCluster;
-
+    //CHECKBOX INCIDENCIAS
     isChecked: Boolean;
     listaIncidencias = [
         {name: "ACCIDENT", check: false},
@@ -91,7 +95,7 @@ export class MapComponent implements AfterViewInit {
         var mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
         var mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
         //INICIALIZAMOS EL MAP CLUSTERING 
-        this.mapClustering = L.map('mapClustering').setView([19.37596, -99.07000], 11);
+        this.mapClustering = new L.map(this.mapContainer.nativeElement).setView([19.37596, -99.07000], 11);
         var mapTrafico = L.map('mapTrafico').setView([19.37596, -99.07000], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="copyright">Openstreetmap</a>'
@@ -349,14 +353,28 @@ export class MapComponent implements AfterViewInit {
                         'No se encontraron Incidencias en esa fecha',
                         'error'
                     )
-                }
+                }else{
+
                 this.listaIncidenciasCheck=data;
+                
+                //REFRESCAR EL MAPCLUSTERING PARA QUE SE UBIQUE EN LA ZONA DEL LUGAR DONDE QUEREMOS CONSULTAR
+                this.mapClustering.remove();
+                this.mapClustering = new L.map(this.mapContainer.nativeElement).setView([data[0].location.y, data[0].location.x], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="copyright">Openstreetmap</a>'
+                }).addTo(this.mapClustering);
+                /***** */
+                
+
+
                 for (let i = 0; i < data.length; i++) {
                     let marker = L.marker(L.latLng(data[i].location.y, data[i].location.x), {icon: this.Icon1});
                     this.markerListCluster.push(marker);
                 }
                 this.markersCluster.addLayers(this.markerListCluster);
                 this.mapClustering.addLayer(this.markersCluster);
+                }
+                
             });
             
             

@@ -82,7 +82,7 @@ IncidenciasCtrl.getAllJams=async(req, res)=>{
      {$match: {"startTime": {"$regex": req.params.fecha}}},
      {$unwind: '$alerts'},
      //{$match: {'jams.city':{"$regex": req.params.ciudad}}},
-     {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'}}}
+     {$group: {_id: '$alerts.id', location: {$first: '$alerts.location'}, Type: {$first: '$alerts.type'}}}
     ]);
     
     res.json(traficoJson);
