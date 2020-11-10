@@ -52,6 +52,7 @@ export class MapComponent implements AfterViewInit {
         {name: "ROAD_CLOSED" ,check: false}
     ]
     horas = [{name: "Todo el dia", check: false}]
+    meses = [{name: "Todo el mes", check: false}]
 
     contadorChecked = 0;
     listaIncidenciasCheck;
@@ -342,14 +343,31 @@ export class MapComponent implements AfterViewInit {
             //CONCATENAMOS LA HORA Y MINUTOS
             cadenaTime = timeText(this.arr[0])+":"+timeText(this.arr[1]);
             console.log(cadenaTime);
+
+            //omitimos el tiempo si checkbox "todo el dia" es verdadero
             for(let j of this.horas){
                 if (j.check==true){cadenaTime="";}
             }
-            //CONVERTIMOS LA FECHA AL FORMATO UTILIZADO EN LOS JSON DE LA BD
-            let fecha = (<any>this.obtenerFecha).format("YYYY-MM-DD");
-            //CONCATENAMOS EL TIEMPO Y LA FECHA PARA NUESTRA CONSULTA
-            let horarioFinal: string= fecha + " " + cadenaTime;
-            console.log(horarioFinal);
+
+            let fecha:any;
+            let horarioFinal: string;
+
+            for(let k of this.meses){
+                if (k.check==true && cadenaTime==""){
+                    fecha = (<any>this.obtenerFecha).format("YYYY-MM");
+                    //CONCATENAMOS EL TIEMPO Y LA FECHA PARA NUESTRA CONSULTA
+                    horarioFinal= fecha + "" + cadenaTime;
+                }else{
+                    //CONVERTIMOS LA FECHA AL FORMATO UTILIZADO EN LOS JSON DE LA BD
+                    fecha = (<any>this.obtenerFecha).format("YYYY-MM-DD");
+                    //CONCATENAMOS EL TIEMPO Y LA FECHA PARA NUESTRA CONSULTA
+                    horarioFinal= fecha + " " + cadenaTime;
+                }
+            }
+
+            
+            
+            console.log("horario final: "+horarioFinal);
             if(this.ciudad=="Todos"){this.ciudad="";}
             this.mapServiceU.getTraficoCluster(horarioFinal,this.ciudad).subscribe( ( data:any ) => {
                 if(data == 0){
@@ -383,6 +401,9 @@ export class MapComponent implements AfterViewInit {
             });
             for(let j of this.horas){
                 if(j.check==true){j.check=false;}
+            }
+            for(let k of this.meses){
+                if(k.check==true){k.check=false;}
             }
             
             console.log((<any>this.obtenerFecha).format("YYYY-MM-DD"));

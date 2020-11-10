@@ -17,6 +17,10 @@
         <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{hora.name}} [(ngModel)]="hora.check" [ngModelOptions]="{standalone: true}">
         {{hora.name}}
     </label>
+    <label class="form-check-label" *ngFor="let mes of meses">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{mes.name}} [(ngModel)]="mes.check" [ngModelOptions]="{standalone: true}">
+        {{mes.name}}
+    </label>
     <button type="submit" class="btn btn-primary form" >Buscar</button>
 </form>
 
