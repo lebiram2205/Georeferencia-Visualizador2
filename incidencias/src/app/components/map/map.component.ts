@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 
 
 
+
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -39,8 +40,12 @@ export class MapComponent implements AfterViewInit {
     //time:string;
     //MAPA CLUSTER VISTO POR TODOS LOS METODOS DE LA CLASE
     mapClustering : any;
+    traficoDenso:any;
     markersCluster;
+    markersClusterDenso;
     markerListCluster;
+    markerListClusterDenso;
+    horarioTraficoDenso;
     //CHECKBOX INCIDENCIAS
     isChecked: Boolean;
     listaIncidencias = [
@@ -96,13 +101,18 @@ export class MapComponent implements AfterViewInit {
         var mymap2 = L.map('mapid2').setView([19.37596, -99.07000], 12);
         var mymap3 = L.map('mapid3').setView([19.37596, -99.07000], 12);
         var mymap5 = L.map('mapid5').setView([19.37596, -99.07000], 11);
+        this.traficoDenso = L.map('mapDenso').setView([19.37596, -99.07000], 11);
         //INICIALIZAMOS EL MAP CLUSTERING 
         this.mapClustering = new L.map(this.mapContainer.nativeElement).setView([19.37596, -99.07000], 11);
         var mapTrafico = L.map('mapTrafico').setView([19.37596, -99.07000], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="copyright">Openstreetmap</a>'
         }).addTo(this.mapClustering);
-        
+         //Fondo de trafico denso
+         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="copyright">Openstreetmap</a>'
+        }).addTo(this.traficoDenso);
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="copyright">Openstreetmap</a>'
         }).addTo(mapTrafico);
@@ -301,9 +311,49 @@ export class MapComponent implements AfterViewInit {
             let marker;
             L.geoJSON(data[0]).addTo(mymap5);
         });
+
+        
         
     }//FIN OnInit
-    
+    //
+    traficoDenso2(){
+    this.mapServiceU.getAlcaldias().subscribe( ( data:any ) => {
+        let marker;
+        L.geoJSON(data[0]).addTo(this.traficoDenso);
+    });
+    this.mapServiceU.gettraficoDenso().subscribe( ( data:any ) => {
+        let marker;
+        this.markersClusterDenso = L.markerClusterGroup();
+        this.markerListClusterDenso = [];
+        
+        let greenIcon = L.icon({iconUrl: '../.././assets/accesdenied.png',
+            iconSize: [20, 20],
+            iconAnchor: [22, 20],
+            popupAnchor: [-3, -76]
+        });
+        //console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].lineas.length; j++) {
+                 setTimeout(()=>{                  
+                // console.log(data[i].lineas[j].y);
+                this.horarioTraficoDenso=data[i].tiempo
+                let marker = L.marker(L.latLng(data[i].lineas[j].y, data[i].lineas[j].x), {icon: this.Icon1});
+               
+
+                this.markerListClusterDenso.push(marker);
+                this.markersClusterDenso.addLayers(this.markerListClusterDenso);
+                this.traficoDenso.addLayer(this.markersClusterDenso);
+                 },i*1000);
+            }
+            
+        }
+        
+     
+   
+        
+    });
+}
+    //fin de trafico denso
 
     //Metodo SUBMIT
     buscarIncidencias() {

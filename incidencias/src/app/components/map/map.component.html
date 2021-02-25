@@ -1,8 +1,8 @@
 <!--FORMULARIO DE INCIDENCIAS-->
 <form class="formStructure" #datosForm="ngForm" (ngSubmit)="buscarIncidencias()">
     <!--CALENDARIO-->
-    <input class="form "  matInput [matDatepicker]="matDatepicker" disabled name="obtenerFecha" [(ngModel)]="obtenerFecha">
-    <mat-datepicker-toggle  [for]="matDatepicker" ></mat-datepicker-toggle>
+    <input class="form " matInput [matDatepicker]="matDatepicker" disabled name="obtenerFecha" [(ngModel)]="obtenerFecha">
+    <mat-datepicker-toggle [for]="matDatepicker"></mat-datepicker-toggle>
     <mat-datepicker #matDatepicker disabled='false'></mat-datepicker>
     <!--SELECTOR DE LUGARES-->
     <div class="form select" ng-app="myApp" ng-controller="myCtrl">
@@ -12,7 +12,9 @@
         </select>
     </div>
     <!--SELECTOR DE HORARIO-->
-    <div class="form" ><ngb-timepicker name="time"  [(ngModel)]="time" [minuteStep]="minuteStep"></ngb-timepicker></div>
+    <div class="form">
+        <ngb-timepicker name="time" [(ngModel)]="time" [minuteStep]="minuteStep"></ngb-timepicker>
+    </div>
     <label class="form-check-label" *ngFor="let hora of horas">
         <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{hora.name}} [(ngModel)]="hora.check" [ngModelOptions]="{standalone: true}">
         {{hora.name}}
@@ -21,7 +23,7 @@
         <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{mes.name}} [(ngModel)]="mes.check" [ngModelOptions]="{standalone: true}">
         {{mes.name}}
     </label>
-    <button type="submit" class="btn btn-primary form" >Buscar</button>
+    <button type="submit" class="btn btn-primary form">Buscar</button>
 </form>
 
 <!--Filtrado de Incidencias
@@ -38,7 +40,7 @@
 </button>
 <div class="card">
     <div class="card-header">
-      Selecciona Incidencia(s) a mostrar:
+        Selecciona Incidencia(s) a mostrar:
     </div>
     <div class="card-body">
         <div class="form-check form-check-inline">
@@ -59,10 +61,10 @@
                 {{incidencia.name}}
             </label>
         </div>
-        
-     
+
+
     </div>
-  </div>
+</div>
 
 
 
@@ -72,6 +74,16 @@
 <div class="container-fluid">
     <h3>Clustering</h3>
     <div #mapClustering id="mapClustering"></div>
+    <button></button>
+</div>
+<div class="container-fluid">
+    <h3>Trafico Denso</h3>
+    <p>{{horarioTraficoDenso}}</p>
+    <div #mapDenso id="mapDenso"></div>
+    <form #datosForm="ngForm" (ngSubmit)="traficoDenso2()">
+        <button type="submit" class="btn btn-primary form">Buscar</button>
+    </form>
+
 </div>
 
 <div class="container text-center">
@@ -97,8 +109,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card mb-12">
-                <i class="fas fa-chart-area"></i>Calles cerradas reportada por
-                los usuarios
+                <i class="fas fa-chart-area"></i>Calles cerradas reportada por los usuarios
                 <div class="card-body" id="mapid3"></div>
             </div>
         </div>
