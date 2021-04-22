@@ -77,8 +77,7 @@
     <div #mapDenso id="mapDenso"></div>
     <!-- <form (ngSubmit)="traficoDenso2()"> -->
     <form>
-
-        <input type="number" value = "0" min="0"  max="287" name="" id="" [formControl] = "numberCtrl">
+          <input type="time" name="" id="" [formControl] = "timeCtrl">
         <button class="btn btn-primary form" (click)="getNumber($event)" >Buscar</button>
         <button class="btn btn-primary form" (click)= "getPausa()" >Pausar</button>
     </form>
