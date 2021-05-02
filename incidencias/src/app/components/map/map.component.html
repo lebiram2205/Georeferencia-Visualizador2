@@ -61,8 +61,6 @@
                 {{incidencia.name}}
             </label>
         </div>
-
-
     </div>
 </div>
 <div class="container-fluid">
@@ -77,9 +75,16 @@
     <div #mapDenso id="mapDenso"></div>
     <!-- <form (ngSubmit)="traficoDenso2()"> -->
     <form>
-          <input type="time" name="" id="" [formControl] = "timeCtrl">
-        <button class="btn btn-primary form" (click)="getNumber($event)" >Buscar</button>
-        <button class="btn btn-primary form" (click)= "getPausa()" >Pausar</button>
+        <div class="form-group">
+            <input type="range" min="0" max="287" [value]="rango" class="form-control-range"  [formControl]="rangeControl">
+        </div>
+        <div class="form-group">
+            <input type="time" name="" [value] ="horario" [formControl] = "timeCtrl" [readonly]="true">
+            <button class="btn btn-primary form" (click)="getHora($event)" >Buscar</button>
+            <button class="btn btn-primary form" (click)= "getPausa()" >Pausar</button>
+            <button class="btn btn-primary form" (click)="controlAtras()" ><</button>
+            <button class="btn btn-primary form" (click)="controlAdelante()">></button>
+        </div>
     </form>
 </div>
 
