@@ -15,6 +15,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 import Swal from 'sweetalert2';
 import { Date } from 'mongoose';
+import { timeStamp } from 'node:console';
 
 
 
@@ -125,12 +126,18 @@ export class MapComponent implements AfterViewInit {
         event.preventDefault();
         // this.rango = this.ajustarHora(this.horario);
         // console.log(this.ajustarHora(this.horario));
-        console.log('Btn buscar')
-        
+        console.log('Btn buscar');
         this.fechaTrafico();
-        // this.traficoDenso2(this.ajustarHora(this.horario));
+        // this.traficoDenso2(this.ajustarHora(this.horario));    
+    }
+
+    reproducir (event: Event){
+        this.bandera = false;
+        event.preventDefault();
+        console.log('Btn reproducir');
+        // this.reprodurtor(this.ajustarHora(this.horario));  
         console.log(this.arregloTrafico);
-        
+          
     }
 
     ajustarHora (hora:string){
@@ -421,10 +428,9 @@ export class MapComponent implements AfterViewInit {
 
 
     fechaTrafico () {
-                //var miObjeto = this;
-        var horario
+        let horario
         this.horarioTraficoDenso = horario;
-        var that = this;
+        let that = this;
                 
         if(this.bandera_mapa){
             this.mapServiceU.getAlcaldias().subscribe((data: any) => {
@@ -436,13 +442,49 @@ export class MapComponent implements AfterViewInit {
         this.mapServiceU.gettraficoDenso().subscribe((dataT: any) => {
             this.arregloTrafico =  dataT;
             console.log('Se obtuvo los datos del mapa');
-            
+            alert('Llegaron los datos');
         });
         
     }
 
+    reprodurtor( rango : number ){
+        let pausa;
+        let tiempo = rango;
+        let markers = L.markerClusterGroup();
 
-    traficoDenso2(rango: number ) {
+        function animacion() {
+                
+            console.log('El tiempo es:' + tiempo)
+            pausa =  this.bandera
+            this.rango =  tiempo;
+            this.ajustarlinea(tiempo);
+
+            markers.clearLayers();
+            this.map.removeLayer(markers);
+            if (this.arregloTrafico.length) {
+                
+                this.map.removeLayer(markers);
+                markers = L.markerClusterGroup();
+
+                this.horarioTraficoDenso = this.arregloTrafico[tiempo].tiempo[0];
+                for (var j = 0; j < (this.arregloTrafico[tiempo].lineas.length); j++) {
+                    for (var k = 0; k < (this.arregloTrafico[tiempo].lineas[j].length - 1); k++) {
+                        var marker = L.marker(new L.LatLng(this.arregloTrafico[tiempo].lineas[j][k].y, this.arregloTrafico[tiempo].lineas[j][k].x), { title: "Hola!" });
+                        markers.addLayer(marker);
+                    }
+                }
+                this.map.addLayer(markers);
+                tiempo++;
+                if (tiempo < this.arregloTrafico.length && pausa ==  false)
+                    setTimeout(animacion, 2000);
+            }
+            //fin animacion
+        }
+        animacion();
+    }
+
+
+    traficoDenso2(rango : number ) {
         console.log('Dentro de trafico denso 0');
         
         
