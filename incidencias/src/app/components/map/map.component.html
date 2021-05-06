@@ -70,7 +70,11 @@
 </div>
 <div class="container-fluid">
     <h3>Trafico Denso</h3>
-    <p>{{horarioTraficoDenso}}</p>
+
+    <div class="form-group">
+        <input type="date" value="2020-01-17"  class="" >
+        <button class="btn btn-primary form" (click)="buscarFecha($event)" >Buscar</button>
+    </div>
 
     <div #mapDenso id="mapDenso"></div>
     <!-- <form (ngSubmit)="traficoDenso2()"> -->
@@ -80,7 +84,7 @@
         </div>
         <div class="form-group">
             <input type="time" name="" [value] ="horario" [formControl] = "timeCtrl" [readonly]="true">
-            <button class="btn btn-primary form" (click)="getHora($event)" >Buscar</button>
+            <button class="btn btn-primary form" (click)="buscarFecha($event)" >Animacion</button>
             <button class="btn btn-primary form" (click)= "getPausa()" >Pausar</button>
             <button class="btn btn-primary form" (click)="controlAtras()" ><</button>
             <button class="btn btn-primary form" (click)="controlAdelante()">></button>

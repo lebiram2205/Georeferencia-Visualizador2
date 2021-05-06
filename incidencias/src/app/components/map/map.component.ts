@@ -35,6 +35,7 @@ export class MapComponent implements AfterViewInit {
     bandera: boolean = false;
     bandera_mapa: boolean =  true;
     horario : string =  "00:00"
+    arregloTrafico : any[];
 
     numberCtrl = new FormControl('0', []);
     timeCtrl = new FormControl(this.horario, []);
@@ -59,7 +60,7 @@ export class MapComponent implements AfterViewInit {
     markersClusterDenso;
     markerListCluster;
     markerListClusterDenso;
-    horarioTraficoDenso = "Tiempo";
+    horarioTraficoDenso;
     map;
     
     
@@ -94,7 +95,7 @@ export class MapComponent implements AfterViewInit {
         this.rangeControl.valueChanges.subscribe(value => {
             this.rango = value ;
             this.bandera = true;
-            this.ajustarlinea(this.rango)
+            this.ajustarlinea(this.rango);      
         })
     }
 
@@ -116,15 +117,20 @@ export class MapComponent implements AfterViewInit {
 
     cambioRango(){
         this.bandera = true;
-        console.log('La bandera es ' + this.bandera);
+        // console.log('La bandera es ' + this.bandera);
     }
 
-    getHora(event: Event) {
+    buscarFecha(event: Event) {
         this.bandera = false;
         event.preventDefault();
         // this.rango = this.ajustarHora(this.horario);
-        console.log(this.ajustarHora(this.horario));
-        this.traficoDenso2(this.ajustarHora(this.horario));
+        // console.log(this.ajustarHora(this.horario));
+        console.log('Btn buscar')
+        
+        this.fechaTrafico();
+        // this.traficoDenso2(this.ajustarHora(this.horario));
+        console.log(this.arregloTrafico);
+        
     }
 
     ajustarHora (hora:string){
@@ -164,6 +170,11 @@ export class MapComponent implements AfterViewInit {
             }
         }
     }
+
+
+    
+
+    // *---------------------------------------------------------------------------------------------------
 
 
     ngAfterViewInit() {
@@ -407,23 +418,52 @@ export class MapComponent implements AfterViewInit {
 
 
     }//FIN OnInit
-    traficoDenso2(rango: number ) {
 
+
+    fechaTrafico () {
+                //var miObjeto = this;
+        var horario
+        this.horarioTraficoDenso = horario;
+        var that = this;
+                
+        if(this.bandera_mapa){
+            this.mapServiceU.getAlcaldias().subscribe((data: any) => {
+                L.geoJSON(data[0]).addTo(that.map);
+                this.bandera_mapa = false;
+            });
+            
+        }
+        this.mapServiceU.gettraficoDenso().subscribe((dataT: any) => {
+            this.arregloTrafico =  dataT;
+            console.log('Se obtuvo los datos del mapa');
+            
+        });
+        
+    }
+
+
+    traficoDenso2(rango: number ) {
+        console.log('Dentro de trafico denso 0');
+        
+        
         let markers = L.markerClusterGroup();
         let tiempo = rango;//sustituye el primer for
         let estado = 0;
         let data;
-
-
+        
+        console.log('Dentro de trafico denso 1');
+        
         //var miObjeto = this;
         let markersClusterDenso = L.markerClusterGroup();
+        console.log('Dentro de trafico denso 2');
         let markerListClusterDenso = [];
         var horario
         this.horarioTraficoDenso = horario;
         var that = this;
-
+        
         this.clearMap(this.mapServiceU);
-
+        console.log('Dentro de trafico denso 3');
+        
         if(this.bandera_mapa){
             this.mapServiceU.getAlcaldias().subscribe((data: any) => {
                 let marker;
@@ -432,10 +472,12 @@ export class MapComponent implements AfterViewInit {
             });
             
         }
-
+        console.log('Dentro de trafico denso 4');
+        
         this.mapServiceU.gettraficoDenso().subscribe((dataT: any) => {
-
-            alert("Recibi data");
+            
+            console.log('Dentro de trafico denso 5');
+            // alert("Recibi data");
             data = dataT;
             estado = 1;
             let marker;
