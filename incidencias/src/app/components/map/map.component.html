@@ -1,20 +1,30 @@
-<!--FORMULARIO DE INCIDENCIAS-->
-<form class="formStructure" #datosForm="ngForm" (ngSubmit)="buscarIncidencias()">
-    <!--CALENDARIO-->
-    <input class="form "  matInput [matDatepicker]="matDatepicker" disabled name="obtenerFecha" [(ngModel)]="obtenerFecha">
-    <mat-datepicker-toggle  [for]="matDatepicker" ></mat-datepicker-toggle>
-    <mat-datepicker #matDatepicker disabled='false'></mat-datepicker>
-    <!--SELECTOR DE LUGARES-->
-    <div class="form select" ng-app="myApp" ng-controller="myCtrl">
+<!-- FORMULARIO DE INCIDENCIAS -->
+<!-- <form class="formStructure" #datosForm="ngForm" (ngSubmit)="buscarIncidencias()"> -->
+    <!-- CALENDARIO -->
+    <!-- <input class="form " matInput [matDatepicker]="matDatepicker" disabled name="obtenerFecha" [(ngModel)]="obtenerFecha">
+    <mat-datepicker-toggle [for]="matDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #matDatepicker disabled='false'></mat-datepicker> -->
+    <!-- SELECTOR DE LUGARES -->
+    <!-- <div class="form select" ng-app="myApp" ng-controller="myCtrl">
         <select id="seleccionado" name="seleccionado" [(ngModel)]="selectedOptionLugar">
             <option hidden selected>Seleccione Ciudad</option>
             <option [value]="item" *ngFor="let item of lista">{{item}}</option>
         </select>
-    </div>
+    </div> -->
     <!--SELECTOR DE HORARIO-->
-    <div class="form" ><ngb-timepicker name="time"  [(ngModel)]="time" [minuteStep]="minuteStep"></ngb-timepicker></div>
-    <button type="submit" class="btn btn-primary form" >Buscar</button>
-</form>
+    <!-- <div class="form">
+        <ngb-timepicker name="time" [(ngModel)]="time" [minuteStep]="minuteStep"></ngb-timepicker>
+    </div> -->
+    <!-- <label class="form-check-label" *ngFor="let hora of horas">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{hora.name}} [(ngModel)]="hora.check" [ngModelOptions]="{standalone: true}">
+        {{hora.name}}
+    </label>
+    <label class="form-check-label" *ngFor="let mes of meses">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value={{mes.name}} [(ngModel)]="mes.check" [ngModelOptions]="{standalone: true}">
+        {{mes.name}}
+    </label>
+    <button type="submit" class="btn btn-primary form">Buscar</button> -->
+<!-- </form> -->
 
 <!--Filtrado de Incidencias
 <div>
@@ -25,12 +35,12 @@
     <h4>POLICE<input type="checkbox" value='POLICE' (change)="filtraIncidencia($event)"></h4>
     <h4>ROAD_CLOSED<input type="checkbox" value='ROAD_CLOSED' (change)="filtraIncidencia($event)"></h4>
 </div>-->
-<button [swal]="['Oops!', 'This is not implemented yet :/', 'warning']">
+<!-- <button [swal]="['Oops!', 'This is not implemented yet :/', 'warning']">
     Do it!
-</button>
+</button> -->
 <div class="card">
     <div class="card-header">
-      Selecciona Incidencia(s) a mostrar:
+        Selecciona Incidencia(s) a mostrar:
     </div>
     <div class="card-body">
         <div class="form-check form-check-inline">
@@ -51,19 +61,34 @@
                 {{incidencia.name}}
             </label>
         </div>
-        
-     
     </div>
-  </div>
-
-
-
-
-
-
+</div>
 <div class="container-fluid">
     <h3>Clustering</h3>
     <div #mapClustering id="mapClustering"></div>
+    <button></button>
+</div>
+<div>
+    <h3>Prueba cambio</h3>
+</div>
+<div class="container-fluid">
+    <h3>Trafico Denso </h3>
+    <p>{{horarioTraficoDenso}}</p>
+
+    <div #mapDenso id="mapDenso"></div>
+    <!-- <form (ngSubmit)="traficoDenso2()"> -->
+    <form>
+        <div class="form-group">
+            <input type="range" min="0" max="287" [value]="rango" class="form-control-range"  [formControl]="rangeControl">
+        </div>
+        <div class="form-group">
+            <input type="time" name="" [value] ="horario" [formControl] = "timeCtrl" [readonly]="true">
+            <button class="btn btn-primary form" (click)="getHora($event)" >Buscar</button>
+            <button class="btn btn-primary form" (click)= "getPausa()" >Pausar</button>
+            <button class="btn btn-primary form" (click)="controlAtras()" ><</button>
+            <button class="btn btn-primary form" (click)="controlAdelante()">></button>
+        </div>
+    </form>
 </div>
 
 <div class="container text-center">
@@ -82,15 +107,14 @@
                 <div class="card-body" id="mapid2"></div>
             </div>
         </div>
-
     </div>
+
 </div>
 <div class="container text-center">
     <div class="row">
         <div class="col-sm-12">
             <div class="card mb-12">
-                <i class="fas fa-chart-area"></i>Calles cerradas reportada por
-                los usuarios
+                <i class="fas fa-chart-area"></i>Calles cerradas reportada por los usuarios
                 <div class="card-body" id="mapid3"></div>
             </div>
         </div>

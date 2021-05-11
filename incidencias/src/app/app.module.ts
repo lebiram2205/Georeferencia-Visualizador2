@@ -49,7 +49,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatFormFieldModule,
     MatMomentDateModule,
     NgbModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    FormsModule
 
   ],
   providers: [MapService ],

@@ -49,4 +49,7 @@ export class MapService {
   getIncidencias(){
     return this.http.get(this.URL_API+'/incidencias');
   }
+  gettraficoDenso(){
+    return this.http.get(this.URL_API+'/traficoDenso');
+  }
 }

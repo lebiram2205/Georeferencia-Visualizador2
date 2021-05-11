@@ -1,5 +1,5 @@
 const mongoose=require ('mongoose');
-const URI= 'mongodb://localhost/incidencias';
+const URI= 'mongodb://localhost:27017/incidencias';
 
 mongoose.connect(URI)
     .then(db => console.log('La base de datos esta conectada'))
