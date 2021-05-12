@@ -32,15 +32,19 @@ import { timeStamp } from 'node:console';
 
 export class MapComponent implements AfterViewInit {
 
-    rango : number = 0;
-    bandera: boolean = false;
-    bandera_mapa: boolean =  true;
-    horario : string =  "00:00"
-    arregloTrafico : any[];
+    rango           : number    = 0;
+    banderaPausa    : boolean   = false;
+    banderaMapa     : boolean   =  true;
+    horario         : string    =  "00:00"
+    arregloTrafico  : any[];
+    activarBtn                  = true;
+    marcas              :any;
+    nombrePlayPausa     :string     = "play_circle";
+    banderaPlayPausa    :boolean    = true;
 
-    numberCtrl = new FormControl('0', []);
-    timeCtrl = new FormControl(this.horario, []);
-    rangeControl = new FormControl(this.rango,[Validators.max(287), Validators.min(0)])
+    timeCtrl        = new FormControl( this.horario , [] );
+    rangeControl    = new FormControl( this.rango , [ Validators.max(287) , Validators.min(0) ] );
+
 
     @ViewChild('mapClustering', { static: true }) mapContainer: ElementRef;
     time: NgbTimeStruct = { hour: 0, minute: 2, second: 0 };
@@ -63,9 +67,6 @@ export class MapComponent implements AfterViewInit {
     markerListClusterDenso;
     horarioTraficoDenso;
     map;
-    
-    
-
 
     //CHECKBOX INCIDENCIAS
     isChecked: Boolean;
@@ -95,7 +96,7 @@ export class MapComponent implements AfterViewInit {
         this.mapServiceU = mapService;
         this.rangeControl.valueChanges.subscribe(value => {
             this.rango = value ;
-            this.bandera = true;
+            // this.banderaPausa = true;
             this.ajustarlinea(this.rango);      
         })
     }
@@ -104,25 +105,21 @@ export class MapComponent implements AfterViewInit {
         if(this.rango > 0){
             this.rango-=1;;
             this.ajustarlinea(this.rango);
-            console.log(this.rango);
+            // console.log(this.rango);
             
         }
     }
+
     controlAdelante(){
         if(this.rango < 288){
             this.rango+=1;;
             this.ajustarlinea(this.rango);
-            console.log(this.rango);
+            // console.log(this.rango);
         }
     }
 
-    cambioRango(){
-        this.bandera = true;
-        // console.log('La bandera es ' + this.bandera);
-    }
-
     buscarFecha(event: Event) {
-        this.bandera = false;
+        this.banderaPausa = false;
         event.preventDefault();
         // this.rango = this.ajustarHora(this.horario);
         // console.log(this.ajustarHora(this.horario));
@@ -132,12 +129,25 @@ export class MapComponent implements AfterViewInit {
     }
 
     reproducir (event: Event){
-        this.bandera = false;
         event.preventDefault();
         console.log('Btn reproducir');
-        // this.reprodurtor(this.ajustarHora(this.horario));  
-        console.log(this.arregloTrafico);
-          
+        if (this.banderaPlayPausa){
+            if(this.banderaPausa){
+                this.borrarClosters();
+                console.log('Se debe borrar');
+            }
+            this.banderaPausa = false;
+            this.pintarClosters(this.rango);
+            this.nombrePlayPausa = 'pause';        
+            this.banderaPlayPausa = false;
+        }else {
+            this.banderaPausa = true;
+            console.log("La pausa es " + this.banderaPausa);
+            this.nombrePlayPausa = 'play_circle';        
+            this.banderaPlayPausa = true;
+        }
+        // this.reprodurtor(this.rango);  
+        // console.log(this.arregloTrafico);
     }
 
     ajustarHora (hora:string){
@@ -159,10 +169,9 @@ export class MapComponent implements AfterViewInit {
     }
 
 
-
     getPausa () {
-        this.bandera = true;
-        console.log("La pausa es " + this.bandera);
+        this.banderaPausa = true;
+        console.log("La pausa es " + this.banderaPausa);
     }
 
 
@@ -178,11 +187,7 @@ export class MapComponent implements AfterViewInit {
         }
     }
 
-
-    
-
     // *---------------------------------------------------------------------------------------------------
-
 
     ngAfterViewInit() {
 
@@ -432,146 +437,64 @@ export class MapComponent implements AfterViewInit {
         this.horarioTraficoDenso = horario;
         let that = this;
                 
-        if(this.bandera_mapa){
+        if(this.banderaMapa){
             this.mapServiceU.getAlcaldias().subscribe((data: any) => {
                 L.geoJSON(data[0]).addTo(that.map);
-                this.bandera_mapa = false;
+                this.banderaMapa = false;
             });
             
+            this.mapServiceU.gettraficoDenso().subscribe((dataT: any) => {
+                this.arregloTrafico =  dataT;
+                console.log('Se obtuvo los datos del mapa');
+                // alert('Llegaron los datos');
+                this.activarBtn = false;
+            });
         }
-        this.mapServiceU.gettraficoDenso().subscribe((dataT: any) => {
-            this.arregloTrafico =  dataT;
-            console.log('Se obtuvo los datos del mapa');
-            alert('Llegaron los datos');
-        });
         
     }
 
-    reprodurtor( rango : number ){
-        let pausa;
-        let tiempo = rango;
+
+    borrarClosters () {
+        this.map.removeLayer( this.marcas );
+    }
+
+    pintarClosters(rango: number) {
         let markers = L.markerClusterGroup();
+        let tiempo = rango;
+        let data = this.arregloTrafico;
+        let that = this;
+        let pausa : boolean;
 
         function animacion() {
-                
-            console.log('El tiempo es:' + tiempo)
-            pausa =  this.bandera
-            this.rango =  tiempo;
-            this.ajustarlinea(tiempo);
-
+            // console.log('El tiempo es:' + tiempo);
+            pausa = that.banderaPausa
+            that.rango = tiempo;
+            that.ajustarlinea(tiempo);
             markers.clearLayers();
-            this.map.removeLayer(markers);
-            if (this.arregloTrafico.length) {
-                
-                this.map.removeLayer(markers);
+            that.map.removeLayer( markers );
+            
+            if ( data.length ) {
+                that.map.removeLayer( markers );
                 markers = L.markerClusterGroup();
-
-                this.horarioTraficoDenso = this.arregloTrafico[tiempo].tiempo[0];
-                for (var j = 0; j < (this.arregloTrafico[tiempo].lineas.length); j++) {
-                    for (var k = 0; k < (this.arregloTrafico[tiempo].lineas[j].length - 1); k++) {
-                        var marker = L.marker(new L.LatLng(this.arregloTrafico[tiempo].lineas[j][k].y, this.arregloTrafico[tiempo].lineas[j][k].x), { title: "Hola!" });
-                        markers.addLayer(marker);
+                
+                that.horarioTraficoDenso = data[ tiempo ].tiempo[0];
+                for (let j = 0; j < (data[ tiempo ].lineas.length); j++) {
+                    for (let k = 0; k < (data[ tiempo ].lineas[ j ].length - 1); k++) {
+                        let marker = L.marker(new L.LatLng(data[ tiempo ].lineas[ j ][ k ].y, data[ tiempo ].lineas[ j ][ k ].x), { title: "Datos Closters" });
+                        markers.addLayer( marker );
                     }
                 }
-                this.map.addLayer(markers);
+                that.marcas = markers;
                 tiempo++;
-                if (tiempo < this.arregloTrafico.length && pausa ==  false)
+                that.map.addLayer(markers);
+                if (tiempo < data.length && pausa == false){
                     setTimeout(animacion, 2000);
+                }
             }
-            //fin animacion
         }
         animacion();
+
     }
-
-
-    traficoDenso2(rango : number ) {
-        console.log('Dentro de trafico denso 0');
-        
-        
-        let markers = L.markerClusterGroup();
-        let tiempo = rango;//sustituye el primer for
-        let estado = 0;
-        let data;
-        
-        console.log('Dentro de trafico denso 1');
-        
-        //var miObjeto = this;
-        let markersClusterDenso = L.markerClusterGroup();
-        console.log('Dentro de trafico denso 2');
-        let markerListClusterDenso = [];
-        var horario
-        this.horarioTraficoDenso = horario;
-        var that = this;
-        
-        this.clearMap(this.mapServiceU);
-        console.log('Dentro de trafico denso 3');
-        
-        if(this.bandera_mapa){
-            this.mapServiceU.getAlcaldias().subscribe((data: any) => {
-                let marker;
-                L.geoJSON(data[0]).addTo(that.map);
-                this.bandera_mapa = false;
-            });
-            
-        }
-        console.log('Dentro de trafico denso 4');
-        
-        this.mapServiceU.gettraficoDenso().subscribe((dataT: any) => {
-            
-            console.log('Dentro de trafico denso 5');
-            // alert("Recibi data");
-            data = dataT;
-            estado = 1;
-            let marker;
-            let pausa;
-            /**/
-
-            /*let greenIcon = L.icon({iconUrl: '../.././assets/accesdenied.png',
-                iconSize: [20, 20],
-                iconAnchor: [22, 20],
-                popupAnchor: [-3, -76]
-            });*/
-            //console.log(data)
-            //setTimeout(()=>{
-            //
-
-            function animacion() {
-                
-                    console.log('El tiempo es:' + tiempo)
-                    pausa =  that.bandera
-                    that.rango =  tiempo;
-                    that.ajustarlinea(tiempo);
-
-                    markers.clearLayers();
-                    that.map.removeLayer(markers);
-                    if (data.length) {
-                        
-                        that.map.removeLayer(markers);
-                        markers = L.markerClusterGroup();
-
-                        that.horarioTraficoDenso = data[tiempo].tiempo[0];
-                        for (var j = 0; j < (data[tiempo].lineas.length); j++) {
-                            for (var k = 0; k < (data[tiempo].lineas[j].length - 1); k++) {
-                                var marker = L.marker(new L.LatLng(data[tiempo].lineas[j][k].y, data[tiempo].lineas[j][k].x), { title: "Hola!" });
-                                markers.addLayer(marker);
-                            }
-                        }
-                        that.map.addLayer(markers);
-                        tiempo++;
-                        if (tiempo < data.length && pausa ==  false)
-                            setTimeout(animacion, 2000);
-                    }
-                    //fin animacion
-                }
-                animacion();
-
-
-
-
-
-        });
-    }
-
 
     buscarIncidencias() {
         for (let i of this.listaIncidencias) {
