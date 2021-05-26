@@ -460,6 +460,8 @@ export class MapComponent implements AfterViewInit {
 
     pintarClosters(rango: number) {
         let markers = L.markerClusterGroup();
+        let capaLineas = L.markerClusterGroup();
+        let segment ;
         let tiempo = rango;
         let data = this.arregloTrafico;
         let that = this;
@@ -470,6 +472,10 @@ export class MapComponent implements AfterViewInit {
             pausa = that.banderaPausa
             that.rango = tiempo;
             that.ajustarlinea(tiempo);
+
+            capaLineas.clearLayers();
+            that.map.removeLayer(capaLineas);
+
             markers.clearLayers();
             that.map.removeLayer( markers );
             
@@ -477,13 +483,31 @@ export class MapComponent implements AfterViewInit {
                 that.map.removeLayer( markers );
                 markers = L.markerClusterGroup();
                 
+                that.map.removeLayer(capaLineas);
+                capaLineas = L.markerClusterGroup();
+                
                 that.horarioTraficoDenso = data[ tiempo ].tiempo[0];
                 for (let j = 0; j < (data[ tiempo ].lineas.length); j++) {
                     for (let k = 0; k < (data[ tiempo ].lineas[ j ].length - 1); k++) {
                         let marker = L.marker(new L.LatLng(data[ tiempo ].lineas[ j ][ k ].y, data[ tiempo ].lineas[ j ][ k ].x), { title: "Datos Closters" });
                         markers.addLayer( marker );
-                    }
+                        let pointA = new L.LatLng(data[tiempo].lineas[j][k].y, data[tiempo].lineas[j][k].x);
+                        let pointB = new L.LatLng(data[tiempo].lineas[j][k+1].y, data[tiempo].lineas[j][k+1].x);
+                        let pointList = [pointA, pointB];
+                        //console.log(data[tiempo].lineas[j][k+1].y );//lineas[12]
+                        segment = new L.Polyline(pointList,
+                            {color: 'red',
+                            weight: 6,
+                            opacity: 0.5,
+                            smoothFactor: 1});
+                    }//fin for k
+                    segment.addTo(capaLineas);//aggrega al mapa
                 }
+                
+                console.log("mi amor");
+                that.map.addLayer(capaLineas);
+                        
+
                 that.marcas = markers;
                 tiempo++;
                 that.map.addLayer(markers);
