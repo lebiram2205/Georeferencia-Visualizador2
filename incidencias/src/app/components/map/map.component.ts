@@ -33,7 +33,7 @@ export class MapComponent implements AfterViewInit {
     rango           : number    = 0;
     banderaPausa    : boolean   = false;
     banderaMapa     : boolean   =  true;
-    paintLine       : boolean   =  true;
+    paintLine       : boolean   =  false;
     horario         : string    =  "00:00"
     arregloTrafico  : any[];
     activarBtn                  = true;
@@ -187,10 +187,14 @@ export class MapComponent implements AfterViewInit {
         }
     }
 
-    pintarLineas(){
-        console.log("Estoy en pintar");
-        
-        this.paintLine = true;
+    pintarLineas(event: Event){
+        if(this.paintLine){
+            this.paintLine = false;
+            console.log(event);
+        }else{
+            this.paintLine = true;
+            console.log(event);
+        }
     }
 
     // *---------------------------------------------------------------------------------------------------
