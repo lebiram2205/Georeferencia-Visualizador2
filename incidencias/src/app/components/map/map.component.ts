@@ -33,10 +33,12 @@ export class MapComponent implements AfterViewInit {
     rango           : number    = 0;
     banderaPausa    : boolean   = false;
     banderaMapa     : boolean   =  true;
+    paintLine       : boolean   =  true;
     horario         : string    =  "00:00"
     arregloTrafico  : any[];
     activarBtn                  = true;
     marcas              :any;
+    marcasLineas        :any;
     nombrePlayPausa     :string     = "play_circle";
     banderaPlayPausa    :boolean    = true;
 
@@ -183,6 +185,12 @@ export class MapComponent implements AfterViewInit {
                 }
             }
         }
+    }
+
+    pintarLineas(){
+        console.log("Estoy en pintar");
+        
+        this.paintLine = true;
     }
 
     // *---------------------------------------------------------------------------------------------------
@@ -453,6 +461,7 @@ export class MapComponent implements AfterViewInit {
 
     borrarClosters () {
         this.map.removeLayer( this.marcas );
+        this.map.removeLayer( this.marcasLineas );
     }
 
     pintarClosters(rango: number) {
@@ -500,12 +509,12 @@ export class MapComponent implements AfterViewInit {
                     }//fin for k
                     segment.addTo(capaLineas);//aggrega al mapa
                 }
-                
-                console.log("mi amor");
-                that.map.addLayer(capaLineas);
-                        
+                if(that.paintLine){
+                    that.map.addLayer(capaLineas);
+                }
 
                 that.marcas = markers;
+                that.marcasLineas = capaLineas;
                 tiempo++;
                 that.map.addLayer(markers);
                 if (tiempo < data.length && pausa == false){
