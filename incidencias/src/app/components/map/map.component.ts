@@ -510,8 +510,9 @@ export class MapComponent implements AfterViewInit {
                             weight: 6,
                             opacity: 0.5,
                             smoothFactor: 1});
+                        segment.addTo(capaLineas);
                     }//fin for k
-                    segment.addTo(capaLineas);//aggrega al mapa
+                    
                 }
                 if(that.paintLine){
                     that.map.addLayer(capaLineas);
