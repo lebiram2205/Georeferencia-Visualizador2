@@ -15,8 +15,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 import Swal from 'sweetalert2';
 import { Date } from 'mongoose';
-import { timeStamp } from 'node:console';
-
 
 
 
@@ -35,10 +33,12 @@ export class MapComponent implements AfterViewInit {
     rango           : number    = 0;
     banderaPausa    : boolean   = false;
     banderaMapa     : boolean   =  true;
+    paintLine       : boolean   =  false;
     horario         : string    =  "00:00"
     arregloTrafico  : any[];
     activarBtn                  = true;
     marcas              :any;
+    marcasLineas        :any;
     nombrePlayPausa     :string     = "play_circle";
     banderaPlayPausa    :boolean    = true;
 
@@ -184,6 +184,16 @@ export class MapComponent implements AfterViewInit {
                     console.log("problem with " + e + m._layers[i]);
                 }
             }
+        }
+    }
+
+    pintarLineas(event: Event){
+        if(this.paintLine){
+            this.paintLine = false;
+            console.log(event);
+        }else{
+            this.paintLine = true;
+            console.log(event);
         }
     }
 
@@ -430,8 +440,7 @@ export class MapComponent implements AfterViewInit {
 
 
     }//FIN OnInit
-
-
+    
     fechaTrafico () {
         let horario
         this.horarioTraficoDenso = horario;
@@ -456,6 +465,7 @@ export class MapComponent implements AfterViewInit {
 
     borrarClosters () {
         this.map.removeLayer( this.marcas );
+        this.map.removeLayer( this.marcasLineas );
     }
 
     pintarClosters(rango: number) {
@@ -496,19 +506,19 @@ export class MapComponent implements AfterViewInit {
                         let pointList = [pointA, pointB];
                         //console.log(data[tiempo].lineas[j][k+1].y );//lineas[12]
                         segment = new L.Polyline(pointList,
-                            {color: 'red',
+                            {color: '#DB3A34',
                             weight: 6,
                             opacity: 0.5,
                             smoothFactor: 1});
                     }//fin for k
                     segment.addTo(capaLineas);//aggrega al mapa
                 }
-                
-                console.log("mi amor");
-                that.map.addLayer(capaLineas);
-                        
+                if(that.paintLine){
+                    that.map.addLayer(capaLineas);
+                }
 
                 that.marcas = markers;
+                that.marcasLineas = capaLineas;
                 tiempo++;
                 that.map.addLayer(markers);
                 if (tiempo < data.length && pausa == false){
@@ -699,4 +709,4 @@ export class MapComponent implements AfterViewInit {
     }
 
 
-}//fin clase 
+}//fin clase
