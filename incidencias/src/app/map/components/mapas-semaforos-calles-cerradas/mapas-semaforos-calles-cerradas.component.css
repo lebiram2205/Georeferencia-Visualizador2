@@ -1,0 +1,100 @@
+.form-check-input,
+.form-check-label {
+    margin-right: 0.5em;
+}
+
+.form {
+    margin-left: 1em;
+}
+
+.formStructure {
+    display: inline-block;
+    border: 0.3rem solid gray;
+    padding: 1em;
+}
+
+.map-container {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+}
+
+.map-frame {
+    border: 2px solid black;
+    height: 200px;
+    width: 300px;
+}
+
+#map,
+#mapClustering,
+#mapTrafico {
+    height: 50%;
+}
+
+#mapid,
+#mapid2,
+#mapid3,
+#mapid4,
+#mapid5,
+#map,
+#mapClustering,
+#mapTrafico,
+#mapDenso {
+    height: 70vh;
+    margin: 0px;
+    padding: 20px;
+}
+
+#mapClustering {
+    /* QUITARLO*/
+    display: block;
+    height: 60vh;
+    margin: 0px;
+    padding: 20px;
+}
+
+.container.text-center {
+    margin-top: 70px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #4CAF50;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    color: #fff;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    border-radius: 0.25rem;
+}
+
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-header+.list-group .list-group-item:first-child {
+    border-top: 0;
+}
+
+.mr-1,
+.mx-1 {
+    margin-right: 0.25rem !important;
+}
+
+.mb-4,
+.my-4 {
+    margin-bottom: 1.5rem !important;
+}

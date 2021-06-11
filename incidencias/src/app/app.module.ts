@@ -12,11 +12,13 @@ import{ FormsModule} from '@angular/forms';
 import{ ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { ChartComponent } from './components/chart/chart.component';
-import { MapComponent } from './components/map/map.component';
+// import { ChartComponent } from './components/chart/chart.component';
+// import { MapComponent } from './components/map/map.component';
 import { MapService } from './services/map.service';
+
+import { SharedModule } from './shared/shared.module';
+import { MapModule } from './map/map.module';
+
 
 
 import * as $ from 'jquery';
@@ -31,10 +33,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    FooterComponent,
-    ChartComponent,
-    MapComponent
+    // ChartComponent,
+    // MapComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +50,12 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatMomentDateModule,
     NgbModule,
     SweetAlert2Module.forRoot(),
-    FormsModule
+    FormsModule,
+
+
+    SharedModule,
+    MapModule,
+    
 
   ],
   providers: [MapService ],
