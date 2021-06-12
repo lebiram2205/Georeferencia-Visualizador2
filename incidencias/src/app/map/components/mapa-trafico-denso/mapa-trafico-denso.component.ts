@@ -3,19 +3,10 @@ import { MapService } from "../../../services/map.service";
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { FormControl, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { stringify } from 'querystring';
-import { NgModule } from '@angular/core';
+
 
 
 import { NgbTimeStruct, NgbTimeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { SelectionModel } from '@angular/cdk/collections';
-
-import Swal from 'sweetalert2';
-import { Date } from 'mongoose';
-
-
 
 @Component({
     selector: 'app-mapa-trafico-denso',
@@ -40,52 +31,16 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
     rangeControl = new FormControl(this.rango, [Validators.max(287), Validators.min(0)]);
 
 
-    @ViewChild('mapClustering', { static: true }) 
+    @ViewChild('mapClustering', { static: true })
     mapContainer: ElementRef;
     time: NgbTimeStruct = { hour: 0, minute: 2, second: 0 };
     mapServiceU: MapService;
-    //TIMEPICKER
-    minuteStep = 5;
-    //DECLARACION DE VARIABLES QUE SE IMPLEMENTAN EN EL FORMULARIO
-    obtenerFecha: string = "";
     lista: string[] = [""];//agrupa todos los lugares con incidencias
-    arr: any[] = [];
-    selectedOptionLugar: string;
-    ciudad: string;
-    //time:string;
-    //MAPA CLUSTER VISTO POR TODOS LOS METODOS DE LA CLASE
-    mapClustering: any;
-    traficoDenso: any;
-    markersCluster;
-    markersClusterDenso;
-    markerListCluster;
-    markerListClusterDenso;
     horarioTraficoDenso;
     map;
 
     //CHECKBOX INCIDENCIAS
-    isChecked: Boolean;
-    listaIncidencias = [
-        { name: "ACCIDENT", check: false },
-        { name: "CHIT_CHAT", check: false },
-        { name: "HAZARD", check: false },
-        { name: "JAM", check: false },
-        { name: "POLICE", check: false },
-        { name: "ROAD_CLOSED", check: false }
-    ]
-    horas = [{ name: "Todo el dia", check: false }]
-    meses = [{ name: "Todo el mes", check: false }]
 
-    contadorChecked = 0;
-    listaIncidenciasCheck;
-    markerListClusterCheck = [];
-    aux = [];
-    Icon1 = L.icon({
-        iconUrl: '../.././assets/accesdenied.png',
-        iconSize: [20, 20],
-        iconAnchor: [22, 20],
-        popupAnchor: [-3, -76]
-    });
 
     constructor(public mapService: MapService) {
         this.mapServiceU = mapService;
@@ -93,8 +48,7 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
             this.rango = value;
             // this.banderaPausa = true;
             this.ajustarlinea(this.rango);
-            console.log(value);
-            
+
         })
     }
 
@@ -135,19 +89,15 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
         this.banderaPausa = false;
         event.preventDefault();
         // this.rango = this.ajustarHora(this.horario);
-        // console.log(this.ajustarHora(this.horario));
-        console.log('Btn buscar');
         this.fechaTrafico();
         // this.traficoDenso2(this.ajustarHora(this.horario));    
     }
 
     reproducir(event: Event) {
         event.preventDefault();
-        console.log('Btn reproducir');
         if (this.banderaPlayPausa) {
             if (this.banderaPausa) {
                 this.borrarClosters();
-                console.log('Se debe borrar');
             }
             this.banderaPausa = false;
             this.pintarClosters(this.rango);
@@ -155,12 +105,10 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
             this.banderaPlayPausa = false;
         } else {
             this.banderaPausa = true;
-            console.log("La pausa es " + this.banderaPausa);
             this.nombrePlayPausa = 'play_circle';
             this.banderaPlayPausa = true;
         }
         // this.reprodurtor(this.rango);  
-        // console.log(this.arregloTrafico);
     }
 
     ajustarHora(hora: string) {
@@ -184,7 +132,7 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
 
     getPausa() {
         this.banderaPausa = true;
-        console.log("La pausa es " + this.banderaPausa);
+
     }
 
 
@@ -194,7 +142,7 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
                 try {
                     m.removeLayer(m._layers[i]);
                 } catch (e) {
-                    console.log("problem with " + e + m._layers[i]);
+                    // console.log("problem with " + e + m._layers[i]);
                 }
             }
         }
@@ -203,10 +151,8 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
     pintarLineas(event: Event) {
         if (this.paintLine) {
             this.paintLine = false;
-            console.log(event);
         } else {
             this.paintLine = true;
-            console.log(event);
         }
     }
 
@@ -224,7 +170,6 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
 
             this.mapServiceU.gettraficoDenso().subscribe((dataT: any) => {
                 this.arregloTrafico = dataT;
-                console.log('Se obtuvo los datos del mapa');
                 // alert('Llegaron los datos');
                 this.activarBtn = false;
             });
@@ -301,6 +246,4 @@ export class MapaTraficoDensoComponent implements AfterViewInit {
         animacion();
 
     }
-
-
 }

@@ -9,9 +9,9 @@ import { PageChartComponent } from './chart/pages/page-chart/page-chart.componen
 //arreglo de rutas 
 const APP_ROUTES:Routes=[
 
-    {path: 'map', component:PageMapComponent},
-    {path: 'chart', component:PageChartComponent},
-    {path: '**', pathMatch:'full', redirectTo:'map'}
+    {path: 'mapas', component:PageMapComponent},
+    {path: 'graficas', component:PageChartComponent},
+    {path: '**', pathMatch:'full', redirectTo:'mapas'}
    
 ];
 export const APP_ROUTING=RouterModule.forRoot(APP_ROUTES);

@@ -3,28 +3,18 @@ import { MapService } from "../../../services/map.service";
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { FormControl, Validators } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { stringify } from 'querystring';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-
 
 import { NgbTimeStruct, NgbTimeAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { SelectionModel } from '@angular/cdk/collections';
 
 import Swal from 'sweetalert2';
-import { Date } from 'mongoose';
-
-
-
 @Component({
   selector: 'app-mapas-semaforos-calles-cerradas',
   templateUrl: './mapas-semaforos-calles-cerradas.component.html',
   styleUrls: ['./mapas-semaforos-calles-cerradas.component.css']
 })
+
 export class MapasSemaforosCallesCerradasComponent implements AfterViewInit {
-  rango           : number    = 0;
+    rango           : number    = 0;
     banderaPausa    : boolean   = false;
     banderaMapa     : boolean   =  true;
     paintLine       : boolean   =  false;
