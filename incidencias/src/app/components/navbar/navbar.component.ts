@@ -12,7 +12,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-
+  corazonada() {
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+    
+      $("#wrapper").toggleClass("toggled");
+    });}
 
 }
