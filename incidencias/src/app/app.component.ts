@@ -12,10 +12,5 @@ export class AppComponent {
   constructor(private router:Router) { }
 
 
-  corazonada() {
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-    
-      $("#wrapper").toggleClass("toggled");
-    });}
+  
 }
